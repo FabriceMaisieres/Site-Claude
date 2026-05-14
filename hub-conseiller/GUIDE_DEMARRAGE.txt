@@ -1,0 +1,68 @@
+================================================================================
+    🚀 GUIDE DE DÉMARRAGE RAPIDE - Hub Conseiller Chardonne
+================================================================================
+
+📦 INSTALLATION (Première fois uniquement)
+------------------------------------------
+1. Ouvrez un terminal dans ce dossier
+2. Tapez : npm install
+3. Attendez que l'installation se termine
+
+▶️  LANCER LE SITE EN LOCAL
+------------------------------------------
+Tapez : npm run dev
+
+Le site s'ouvrira automatiquement dans votre navigateur à l'adresse :
+👉 http://localhost:3000
+
+🛑 ARRÊTER LE SERVEUR
+------------------------------------------
+Dans le terminal, appuyez sur : Ctrl+C (ou Cmd+C sur Mac)
+
+📤 DÉPLOYER EN LIGNE (Hébergement gratuit)
+------------------------------------------
+
+Option 1 - NETLIFY (Le plus simple) :
+  1. Créez un compte sur https://www.netlify.com
+  2. Cliquez sur "Add new site" > "Deploy manually"
+  3. Tapez dans le terminal : npm run build
+  4. Glissez-déposez le dossier "dist" sur Netlify
+  5. Votre site est en ligne ! 🎉
+
+Option 2 - VERCEL :
+  1. Créez un compte sur https://vercel.com
+  2. Installez Vercel : npm install -g vercel
+  3. Tapez : npm run build
+  4. Tapez : vercel --prod
+  5. Suivez les instructions
+
+Option 3 - GITHUB PAGES :
+  1. Créez un repository GitHub
+  2. Modifiez vite.config.js (voir README.md)
+  3. Tapez : npm install --save-dev gh-pages
+  4. Ajoutez les scripts de déploiement (voir README.md)
+  5. Tapez : npm run deploy
+
+📝 MODIFIER LE CONTENU
+------------------------------------------
+1. Ouvrez : src/App.jsx
+2. Modifiez les données (commissions, ressources, etc.)
+3. Sauvegardez - le site se met à jour automatiquement !
+
+🆘 PROBLÈMES ?
+------------------------------------------
+- Node.js pas installé ? Téléchargez sur https://nodejs.org
+- Erreur "command not found" ? Réinstallez Node.js
+- Site ne se charge pas ? Vérifiez la console (F12 dans le navigateur)
+- Autres problèmes ? Consultez le README.md complet
+
+💡 ASTUCES
+------------------------------------------
+- Le site s'adapte automatiquement au mode sombre/clair
+- Fonctionne sur mobile, tablette et ordinateur
+- Tous les liens s'ouvrent dans un nouvel onglet
+- Pour sauvegarder vos notes, copiez-les ailleurs (pas de sauvegarde auto)
+
+================================================================================
+Pour plus de détails, consultez le README.md
+================================================================================
