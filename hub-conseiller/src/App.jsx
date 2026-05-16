@@ -1341,11 +1341,16 @@ const App = () => {
         }
         .flag-chardonne {
           background: white;
-          position: relative;
+          padding: 2px;
           display: flex;
-          align-items: flex-end;
+          align-items: center;
           justify-content: center;
-          padding-bottom: 4px;
+        }
+
+        .flag-chardonne img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
         }
 
         .chardonne-emblem {
