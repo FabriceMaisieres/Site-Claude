@@ -151,7 +151,7 @@ const App = () => {
   };
 
   const renderAccueil = () => (
-    <div className="content-space">
+    <div className="content-space" style={{ maxWidth: '1300px' }}>
       <div className="header-block">
         <div className="swiss-cross">+</div>
         <h1 className="main-title">BIENVENUE</h1>
