@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Search, ChevronRight, FileText, Building2, Scale, Book, Home, Menu, X } from 'lucide-react';
+import { Search, ChevronRight, FileText, Building2, Scale, Book, Home, Menu, X, Users, Vote, Mail, PanelLeftClose, PanelLeftOpen } from 'lucide-react';
+import SwissMap from './SwissMap.jsx';
 
 // Logos officiels (servis depuis le dossier public/)
 const LOGO_SUISSE = "/logo_suisse.jpeg";
@@ -118,6 +119,7 @@ const App = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [expandedChapitres, setExpandedChapitres] = useState({});
   const [dateTime, setDateTime] = useState(new Date());
+  const [sidebarHidden, setSidebarHidden] = useState(false);
 
   // Mise à jour de l'heure toutes les secondes
   useEffect(() => {
@@ -134,7 +136,10 @@ const App = () => {
     { id: 'communal', label: 'Règlements communaux', icon: Building2, category: 'COMMUNE' },
     { id: 'commissions', label: 'Commissions', icon: FileText, category: 'COMMUNE' },
     { id: 'documents', label: 'Documents officiels (site web)', icon: FileText, category: 'COMMUNE' },
-    { id: 'rues', label: 'Carte & Rues', icon: FileText, category: 'COMMUNE' }
+    { id: 'rues', label: 'Carte & Rues', icon: FileText, category: 'COMMUNE' },
+    { id: 'csp-presentation', label: 'Présentation', icon: Users, category: 'CHARDONNE SANS PARTI' },
+    { id: 'csp-programme', label: 'Programme & Élections 2026', icon: Vote, category: 'CHARDONNE SANS PARTI' },
+    { id: 'csp-elus', label: 'Élus & Contact', icon: Mail, category: 'CHARDONNE SANS PARTI' }
   ];
 
   const toggleChapitre = (sectionIndex, chapitreIndex) => {
@@ -149,13 +154,21 @@ const App = () => {
     <div className="content-space">
       <div className="header-block">
         <div className="swiss-cross">+</div>
-        <h1 className="main-title">ARCHIVES RÉGLEMENTAIRES</h1>
+        <h1 className="main-title">BIENVENUE</h1>
         <h2 className="sub-title">COMMUNE DE CHARDONNE</h2>
         <div className="divider"></div>
         <p className="intro-text">
-          Base de référence centralisée des règlements et législations applicables 
-          à la commune de Chardonne, Canton de Vaud, Confédération suisse.
+          Ce site rassemble les références, règlements et documents officiels utiles
+          au travail de conseiller communal. Que ce soit pour préparer une séance,
+          vérifier un article du règlement, identifier une commission ou retrouver
+          un préavis municipal, vous y trouverez les ressources nécessaires à vos
+          recherches et à vos sessions de travail.
         </p>
+      </div>
+
+      <div className="section-block">
+        <h3 className="section-heading">OÙ SE SITUE CHARDONNE</h3>
+        <SwissMap />
       </div>
 
       <div className="section-block">
@@ -167,7 +180,7 @@ const App = () => {
           </div>
           <div className="info-card">
             <div className="card-label">DISTRICT</div>
-            <div className="card-value">Lavaux-Oron</div>
+            <div className="card-value">Riviera-Pays-d'Enhaut</div>
           </div>
           <div className="info-card">
             <div className="card-label">AUTORITÉ</div>
@@ -1149,6 +1162,203 @@ const App = () => {
     </div>
   );
 
+  const renderCSPPresentation = () => (
+    <div className="content-space">
+      <div className="doc-header">
+        <h1 className="doc-title">CHARDONNE SANS PARTI</h1>
+        <p className="doc-meta">Mouvement politique local — sans étiquette partisane</p>
+      </div>
+
+      <div className="section-block">
+        <h3 className="section-heading">PRÉSENTATION</h3>
+        <p style={{ lineHeight: '1.8', color: '#444' }}>
+          Chardonne Sans Parti (CSP) est un groupement politique local qui rassemble des citoyennes
+          et citoyens engagés pour la commune, sans affiliation à un parti politique national ou cantonal.
+          Le mouvement met en avant la proximité, la concertation et la prise de décision pragmatique
+          au service des habitants de Chardonne.
+        </p>
+      </div>
+
+      <div className="section-block">
+        <h3 className="section-heading">REPRÉSENTATION ACTUELLE (LÉGISLATURE 2026-2031)</h3>
+        <div className="grid-3">
+          <div className="info-card">
+            <div className="card-label">CONSEIL COMMUNAL</div>
+            <div className="card-value">22 / 50 sièges</div>
+          </div>
+          <div className="info-card">
+            <div className="card-label">MUNICIPALITÉ</div>
+            <div className="card-value">3 / 5 sièges</div>
+          </div>
+          <div className="info-card">
+            <div className="card-label">FONDATION</div>
+            <div className="card-value">Mouvement actif depuis 2016</div>
+          </div>
+        </div>
+      </div>
+
+      <div className="resource-block">
+        <h3 className="section-heading">SITE OFFICIEL</h3>
+        <a href="https://chardonnesansparti.ch" target="_blank" rel="noopener noreferrer" className="resource-link">
+          <div className="resource-info">
+            <div className="resource-title">chardonnesansparti.ch</div>
+            <div className="resource-meta">Site officiel du mouvement</div>
+          </div>
+          <ChevronRight size={20} />
+        </a>
+        <a href="https://chardonnesansparti.ch/notre-groupement/" target="_blank" rel="noopener noreferrer" className="resource-link">
+          <div className="resource-info">
+            <div className="resource-title">Notre groupement</div>
+            <div className="resource-meta">Présentation détaillée des valeurs et engagements</div>
+          </div>
+          <ChevronRight size={20} />
+        </a>
+      </div>
+    </div>
+  );
+
+  const renderCSPProgramme = () => (
+    <div className="content-space">
+      <div className="doc-header">
+        <h1 className="doc-title">PROGRAMME & ÉLECTIONS 2026</h1>
+        <p className="doc-meta">Législature 2026-2031</p>
+      </div>
+
+      <div className="section-block">
+        <h3 className="section-heading">RÉSULTATS DU 1ᵉʳ TOUR — 8 MARS 2026</h3>
+        <p style={{ lineHeight: '1.8', color: '#444', marginBottom: '1rem' }}>
+          <strong>Conseil communal :</strong> les 22 candidates et candidats du CSP ont été élus, soit
+          22 sièges sur 50.
+        </p>
+        <p style={{ lineHeight: '1.8', color: '#444' }}>
+          <strong>Municipalité :</strong> Alice Reymond et Catherine Cossy sont élues au premier tour.
+          Yannik Vallotton se classe 4ᵉ et passe au second tour.
+        </p>
+      </div>
+
+      <div className="section-block">
+        <h3 className="section-heading">RÉSULTATS DU 2ᵈ TOUR — 29 MARS 2026</h3>
+        <p style={{ lineHeight: '1.8', color: '#444' }}>
+          Yannik Vallotton est élu à la Municipalité avec plus de 54 % des voix. La nouvelle
+          Municipalité pour 2026-2031 est composée de 3 élus CSP (Alice Reymond, Catherine Cossy,
+          Yannik Vallotton) et de 2 élus PLR (Yves Genton, Marc Payot).
+        </p>
+      </div>
+
+      <div className="resource-block">
+        <h3 className="section-heading">DOCUMENTS DE CAMPAGNE</h3>
+        <a href="https://chardonnesansparti.ch/elections-2026/notre-programme/" target="_blank" rel="noopener noreferrer" className="resource-link">
+          <div className="resource-info">
+            <div className="resource-title">Notre programme</div>
+            <div className="resource-meta">Programme complet du CSP pour 2026-2031</div>
+          </div>
+          <ChevronRight size={20} />
+        </a>
+        <a href="https://chardonnesansparti.ch/elections-2026/elections-du-8-mars-2026-resultats/" target="_blank" rel="noopener noreferrer" className="resource-link">
+          <div className="resource-info">
+            <div className="resource-title">Résultats du 1ᵉʳ tour</div>
+            <div className="resource-meta">Détails — 8 mars 2026</div>
+          </div>
+          <ChevronRight size={20} />
+        </a>
+        <a href="https://chardonnesansparti.ch/elections-2026/resultats-du-second-tour-de-lelection-a-la-municipalite-29-mars-2026/" target="_blank" rel="noopener noreferrer" className="resource-link">
+          <div className="resource-info">
+            <div className="resource-title">Résultats du 2ᵈ tour</div>
+            <div className="resource-meta">Élection à la Municipalité — 29 mars 2026</div>
+          </div>
+          <ChevronRight size={20} />
+        </a>
+        <a href="https://chardonnesansparti.ch/elections-2026/videos/" target="_blank" rel="noopener noreferrer" className="resource-link">
+          <div className="resource-info">
+            <div className="resource-title">Vidéos de campagne</div>
+            <div className="resource-meta">Présentation des grands axes du programme</div>
+          </div>
+          <ChevronRight size={20} />
+        </a>
+      </div>
+    </div>
+  );
+
+  const renderCSPElus = () => (
+    <div className="content-space">
+      <div className="doc-header">
+        <h1 className="doc-title">ÉLUS & CONTACT</h1>
+        <p className="doc-meta">Représentants CSP — Législature 2026-2031</p>
+      </div>
+
+      <div className="section-block">
+        <h3 className="section-heading">MUNICIPALITÉ (3 SIÈGES SUR 5)</h3>
+        <div className="commissions-list">
+          <div className="commission-block">
+            <div className="commission-header">
+              <h3 className="commission-name">Alice Reymond</h3>
+              <span className="badge permanente">CSP</span>
+            </div>
+            <p style={{ color: '#666', fontSize: '0.95rem' }}>Élue au 1ᵉʳ tour le 8 mars 2026</p>
+          </div>
+          <div className="commission-block">
+            <div className="commission-header">
+              <h3 className="commission-name">Catherine Cossy</h3>
+              <span className="badge permanente">CSP</span>
+            </div>
+            <p style={{ color: '#666', fontSize: '0.95rem' }}>Élue au 1ᵉʳ tour le 8 mars 2026</p>
+          </div>
+          <div className="commission-block">
+            <div className="commission-header">
+              <h3 className="commission-name">Yannik Vallotton</h3>
+              <span className="badge permanente">CSP</span>
+            </div>
+            <p style={{ color: '#666', fontSize: '0.95rem' }}>Élu au 2ᵈ tour le 29 mars 2026 (54 % des voix)</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="section-block">
+        <h3 className="section-heading">CONSEIL COMMUNAL (22 SIÈGES SUR 50)</h3>
+        <p style={{ lineHeight: '1.8', color: '#444', marginBottom: '1rem' }}>
+          Les 22 candidates et candidats CSP ont été élus au Conseil communal le 8 mars 2026.
+          La liste nominative complète est consultable sur le site officiel.
+        </p>
+        <a href="https://chardonnesansparti.ch/galerie-avec-description-et-un-bouton/" target="_blank" rel="noopener noreferrer" className="external-link-button">
+          Voir la liste des élus
+          <ChevronRight size={20} />
+        </a>
+      </div>
+
+      <div className="resource-block">
+        <h3 className="section-heading">CONTACT & RÉSEAUX SOCIAUX</h3>
+        <a href="https://chardonnesansparti.ch/contact/" target="_blank" rel="noopener noreferrer" className="resource-link">
+          <div className="resource-info">
+            <div className="resource-title">Formulaire de contact</div>
+            <div className="resource-meta">Page officielle de contact</div>
+          </div>
+          <ChevronRight size={20} />
+        </a>
+        <a href="https://facebook.com/chardonnesansparti" target="_blank" rel="noopener noreferrer" className="resource-link">
+          <div className="resource-info">
+            <div className="resource-title">Facebook</div>
+            <div className="resource-meta">facebook.com/chardonnesansparti</div>
+          </div>
+          <ChevronRight size={20} />
+        </a>
+        <a href="https://instagram.com/chardonnesansparti" target="_blank" rel="noopener noreferrer" className="resource-link">
+          <div className="resource-info">
+            <div className="resource-title">Instagram</div>
+            <div className="resource-meta">@chardonnesansparti</div>
+          </div>
+          <ChevronRight size={20} />
+        </a>
+        <a href="https://www.youtube.com/@ChardonneSansParti" target="_blank" rel="noopener noreferrer" className="resource-link">
+          <div className="resource-info">
+            <div className="resource-title">YouTube</div>
+            <div className="resource-meta">Chaîne officielle</div>
+          </div>
+          <ChevronRight size={20} />
+        </a>
+      </div>
+    </div>
+  );
+
   const renderContent = () => {
     switch(currentPage) {
       case 'accueil': return renderAccueil();
@@ -1158,6 +1368,9 @@ const App = () => {
       case 'commissions': return renderCommissions();
       case 'documents': return renderDocuments();
       case 'rues': return renderRues();
+      case 'csp-presentation': return renderCSPPresentation();
+      case 'csp-programme': return renderCSPProgramme();
+      case 'csp-elus': return renderCSPElus();
       default: return renderAccueil();
     }
   };
@@ -1167,6 +1380,14 @@ const App = () => {
       <header className="header">
         <div className="header-container">
           <div className="logo">
+            <button
+              className="sidebar-toggle-btn"
+              onClick={() => setSidebarHidden(!sidebarHidden)}
+              title={sidebarHidden ? "Afficher le menu" : "Masquer le menu"}
+              aria-label={sidebarHidden ? "Afficher le menu" : "Masquer le menu"}
+            >
+              {sidebarHidden ? <PanelLeftOpen size={22} /> : <PanelLeftClose size={22} />}
+            </button>
             <div className="flags-container">
               <a 
                 href="https://fr.wikipedia.org/wiki/Drapeau_et_armoiries_de_la_Suisse" 
@@ -1197,8 +1418,8 @@ const App = () => {
               </a>
             </div>
             <div className="logo-text">
-              <span className="logo-main">CHARDONNE</span>
-              <span className="logo-sub">Archives officielles</span>
+              <span className="logo-main">MÉMO DU CONSEILLER COMMUNAL</span>
+              <span className="logo-sub">Chardonne · Ressources et règlements</span>
             </div>
           </div>
           <div className="header-info">
@@ -1231,7 +1452,7 @@ const App = () => {
       </header>
 
       <div className="layout">
-        <aside className={`sidebar ${mobileMenuOpen ? 'open' : ''}`}>
+        <aside className={`sidebar ${mobileMenuOpen ? 'open' : ''} ${sidebarHidden ? 'hidden' : ''}`}>
           {navigation.map((item, index) => {
             const Icon = item.icon;
             const showCategoryHeader = item.category && (index === 0 || navigation[index - 1].category !== item.category);
@@ -1456,6 +1677,26 @@ const App = () => {
           cursor: pointer;
         }
 
+        .sidebar-toggle-btn {
+          background: none;
+          border: none;
+          color: white;
+          cursor: pointer;
+          padding: 0.4rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 4px;
+          margin-right: 0.5rem;
+          opacity: 0.85;
+          transition: opacity 0.15s, background 0.15s;
+        }
+
+        .sidebar-toggle-btn:hover {
+          opacity: 1;
+          background: rgba(255, 255, 255, 0.1);
+        }
+
         .layout {
           max-width: 1400px;
           margin: 0 auto;
@@ -1468,6 +1709,10 @@ const App = () => {
           background: white;
           border-right: 1px solid #D0D0D0;
           padding: 1.5rem 0;
+        }
+
+        .sidebar.hidden {
+          display: none;
         }
 
         .sidebar-category {
@@ -2671,6 +2916,7 @@ const App = () => {
 
         @media (max-width: 768px) {
           .menu-btn { display: block; }
+          .sidebar-toggle-btn { display: none; }
           .header-info { display: none; }
           .sidebar {
             position: fixed;
