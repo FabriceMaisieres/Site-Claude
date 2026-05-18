@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, ChevronRight, FileText, Building2, Scale, Book, Home, Menu, X, Users, Vote, Mail, PanelLeftClose, PanelLeftOpen } from 'lucide-react';
+import { Search, ChevronRight, FileText, Building2, Scale, Book, Home, Menu, X, Users, Vote, Mail, PanelLeftClose, PanelLeftOpen, Newspaper, BarChart3 } from 'lucide-react';
 import SwissMap from './SwissMap.jsx';
 
 // Logos officiels (servis depuis le dossier public/)
@@ -137,9 +137,11 @@ const App = () => {
     { id: 'commissions', label: 'Commissions', icon: FileText, category: 'COMMUNE' },
     { id: 'documents', label: 'Documents officiels (site web)', icon: FileText, category: 'COMMUNE' },
     { id: 'rues', label: 'Carte & Rues', icon: FileText, category: 'COMMUNE' },
+    { id: 'elections', label: 'Élections 2026', icon: BarChart3, category: 'COMMUNE' },
     { id: 'csp-presentation', label: 'Présentation', icon: Users, category: 'CHARDONNE SANS PARTI' },
     { id: 'csp-programme', label: 'Programme & Élections 2026', icon: Vote, category: 'CHARDONNE SANS PARTI' },
-    { id: 'csp-elus', label: 'Élus & Contact', icon: Mail, category: 'CHARDONNE SANS PARTI' }
+    { id: 'csp-elus', label: 'Élus & Contact', icon: Mail, category: 'CHARDONNE SANS PARTI' },
+    { id: 'medias', label: 'Presse & médias', icon: Newspaper, category: 'MÉDIAS' }
   ];
 
   const toggleChapitre = (sectionIndex, chapitreIndex) => {
@@ -379,12 +381,9 @@ const App = () => {
               <div className="prefet-name">M. Fabrice Neyroud</div>
               <div className="prefet-role">Préfet à 50%</div>
               <p className="prefet-description">
-                Syndic de Chardonne et député au Grand Conseil vaudois, Fabrice Neyroud est également 
+                Député au Grand Conseil vaudois, Fabrice Neyroud est également
                 vigneron-encaveur. Nommé préfet en 2023, il succède à Florence Siegrist.
               </p>
-              <div className="prefet-highlight">
-                ⭐ Syndic de la Commune de Chardonne
-              </div>
             </div>
           </div>
 
@@ -1359,6 +1358,435 @@ const App = () => {
     </div>
   );
 
+  const renderElections = () => {
+    const totalCC = 50;
+    const totalMuni = 5;
+
+    const tableStyles = {
+      table: {
+        width: '100%',
+        borderCollapse: 'collapse',
+        marginTop: '1.5rem',
+        background: 'white',
+        border: '1px solid #E5E7EB',
+        borderRadius: '6px',
+        overflow: 'hidden',
+      },
+      th: {
+        background: '#F8FAFC',
+        padding: '0.75rem 1rem',
+        textAlign: 'left',
+        fontSize: '0.75rem',
+        fontWeight: 700,
+        letterSpacing: '0.05em',
+        color: '#666',
+        borderBottom: '1px solid #E5E7EB',
+      },
+      td: {
+        padding: '0.85rem 1rem',
+        borderBottom: '1px solid #F1F5F9',
+        fontSize: '0.95rem',
+        color: '#1A1A1A',
+      },
+      pastille: {
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minWidth: '38px',
+        padding: '0.25rem 0.5rem',
+        marginRight: '0.6rem',
+        fontSize: '0.7rem',
+        fontWeight: 700,
+        letterSpacing: '0.05em',
+        color: 'white',
+        borderRadius: '3px',
+      },
+      muted: {
+        color: '#999',
+        fontStyle: 'italic',
+        fontSize: '0.85rem',
+      },
+    };
+
+    const partisCC = [
+      { code: 'CSP', nom: 'Chardonne Sans Parti (CSP)', sieges: 22, suffrages: 22300, couleur: '#003366', evolution: '+1' },
+      { code: 'PLR', nom: 'PLR Chardonne', sieges: 17, suffrages: 17059, couleur: '#1E88E5', evolution: '—' },
+      { code: 'GCI', nom: 'Groupement des Citoyens Indépendants (GCI)', sieges: 8, suffrages: 8799, couleur: '#4A7C59', evolution: '—' },
+      { code: 'UDC', nom: 'UDC et indépendants', sieges: 3, suffrages: 2775, couleur: '#8B6F47', evolution: '—' },
+    ];
+
+    const partisMuni = [
+      { code: 'CSP', nom: 'Chardonne Sans Parti', sieges: 3, couleur: '#003366' },
+      { code: 'PLR', nom: 'PLR Les Libéraux-Radicaux', sieges: 2, couleur: '#1E88E5' },
+    ];
+
+    const elusMuni = [
+      { nom: 'Maria Alice Reymond', parti: 'CSP', fonction: 'Syndique', detail: 'Réélue au 1er tour (69.7 %)' },
+      { nom: 'Catherine Cossy', parti: 'CSP', fonction: 'Municipale', detail: 'Élue au 1er tour (50.04 %)' },
+      { nom: 'Yannik Vallotton', parti: 'CSP', fonction: 'Municipal', detail: 'Élu au 2ᵈ tour (54 %)' },
+      { nom: 'Yves Genton', parti: 'PLR', fonction: 'Municipal', detail: 'Élu au 2ᵈ tour' },
+      { nom: 'Marc Payot', parti: 'PLR', fonction: 'Municipal', detail: 'Élu au 2ᵈ tour' },
+    ];
+
+    const elusCCParParti = [
+      {
+        code: 'CSP',
+        nom: 'Chardonne Sans Parti (22 sièges)',
+        couleur: '#003366',
+        elus: [
+          { nom: 'Rütsche Christin', suffrages: 683 },
+          { nom: 'Neyroud Carine', suffrages: 660 },
+          { nom: 'Pellé Nathalie', suffrages: 592 },
+          { nom: 'Cossy Stöcklin Catherine', suffrages: 566 },
+          { nom: 'Marmy Baptiste', suffrages: 557 },
+          { nom: 'Vallotton Yannik', suffrages: 552 },
+          { nom: 'Cagnard Corinne', suffrages: 552 },
+          { nom: 'Décorvet Pascal', suffrages: 551 },
+          { nom: 'Dumas Anne-Laure', suffrages: 546 },
+          { nom: 'Leveaux Marie', suffrages: 543 },
+          { nom: 'Dufey Boris', suffrages: 539 },
+          { nom: 'Prêtre Daniel André', suffrages: 508 },
+          { nom: 'Havelka Raphaël', suffrages: 495 },
+          { nom: 'Lecourt Julien', suffrages: 491 },
+          { nom: 'Cegarra Virginie', suffrages: 490 },
+          { nom: 'Schimmel Priscilla', suffrages: 489 },
+          { nom: 'Althaus Fabien', suffrages: 488 },
+          { nom: 'Burdet Liliane', suffrages: 485 },
+          { nom: 'Aiello Graziella', suffrages: 477 },
+          { nom: 'Maisières Fabrice', suffrages: 467 },
+          { nom: 'Lange Fabrice', suffrages: 459 },
+          { nom: 'Attinost David', suffrages: 457 },
+        ],
+        sourceUrl: 'https://chardonnesansparti.ch/galerie-avec-description-et-un-bouton/',
+        sourceLabel: 'Voir la galerie CSP',
+      },
+      {
+        code: 'PLR',
+        nom: 'PLR Chardonne (17 sièges)',
+        couleur: '#1E88E5',
+        elus: [
+          { nom: 'Morel Delphine', suffrages: 590 },
+          { nom: 'Mouron Jean-Philippe', suffrages: 574 },
+          { nom: 'Ducret Anne', suffrages: 536 },
+          { nom: 'Duriaux Gilles', suffrages: 504 },
+          { nom: 'Payot Marc', suffrages: 492 },
+          { nom: 'Troxler Simone', suffrages: 459 },
+          { nom: 'Fort Mélanie', suffrages: 429 },
+          { nom: 'Desreumaux Philippe', suffrages: 429 },
+          { nom: 'Neyroud Valentin', suffrages: 415 },
+          { nom: 'Gilliéron Romain', suffrages: 413 },
+          { nom: 'Jordan Caroline', suffrages: 411 },
+          { nom: 'Michel Laurent', suffrages: 396 },
+          { nom: 'Oechslin Daniel', suffrages: 396 },
+          { nom: 'Luyet Cyril', suffrages: 387 },
+          { nom: 'Monnier Nicole', suffrages: 381 },
+          { nom: 'Ducret Francine', suffrages: 372 },
+          { nom: 'Girod Maxime', suffrages: 371 },
+        ],
+        sourceUrl: 'https://www.plr-chardonne.ch/personnes/conseil-communal',
+        sourceLabel: 'Site PLR Chardonne',
+      },
+      {
+        code: 'GCI',
+        nom: 'Groupement des Citoyens Indépendants (8 sièges)',
+        couleur: '#4A7C59',
+        elus: [
+          { nom: 'Verdan Philippe', suffrages: 509 },
+          { nom: 'Pelot Jean-David', suffrages: 355 },
+          { nom: 'Chappuis Céline', suffrages: 334 },
+          { nom: 'Marclay Catherine', suffrages: 326 },
+          { nom: 'Wernli Heinz', suffrages: 291 },
+          { nom: 'Johnston Christine', suffrages: 287 },
+          { nom: 'Hierholtz Ladislas', suffrages: 268 },
+          { nom: 'Mercier Philippe', suffrages: 258 },
+        ],
+        sourceUrl: 'https://www.gcichardonne.ch/viennent-ensuite-fr510.html',
+        sourceLabel: 'Site GCI Chardonne',
+      },
+      {
+        code: 'UDC',
+        nom: 'UDC et indépendants (3 sièges)',
+        couleur: '#8B6F47',
+        elus: [
+          { nom: 'Cavin Virgile', suffrages: 104 },
+          { nom: 'Ducret Kevin', suffrages: 100 },
+          { nom: 'Ciocca Alain', suffrages: 82 },
+        ],
+        sourceUrl: null,
+        sourceLabel: null,
+      },
+    ];
+
+    const SeatBar = ({ items, total }) => (
+      <div style={{ marginTop: '0.5rem' }}>
+        <div style={{ display: 'flex', height: '28px', borderRadius: '6px', overflow: 'hidden', border: '1px solid #E5E7EB' }}>
+          {items.map((p) => (
+            <div
+              key={p.code}
+              title={`${p.nom} — ${p.sieges} sièges`}
+              style={{
+                flex: p.sieges,
+                background: p.couleur,
+                color: 'white',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '0.75rem',
+                fontWeight: 700,
+              }}
+            >
+              {p.sieges >= 3 ? `${p.code} · ${p.sieges}` : p.sieges}
+            </div>
+          ))}
+        </div>
+        <div style={{ fontSize: '0.75rem', color: '#666', marginTop: '0.4rem', textAlign: 'right' }}>
+          Total : {total} sièges
+        </div>
+      </div>
+    );
+
+    return (
+      <div className="content-space" style={{ maxWidth: '1100px' }}>
+        <div className="doc-header">
+          <h1 className="doc-title">ÉLECTIONS COMMUNALES 2026</h1>
+          <p className="doc-meta">Résultats — Législature 2026-2031</p>
+        </div>
+
+        <div className="section-block">
+          <h3 className="section-heading">CONSEIL COMMUNAL ({totalCC} SIÈGES)</h3>
+          <SeatBar items={partisCC} total={totalCC} />
+
+          <table style={tableStyles.table}>
+            <thead>
+              <tr>
+                <th style={tableStyles.th}>Parti</th>
+                <th style={{ ...tableStyles.th, textAlign: 'right' }}>Sièges</th>
+                <th style={{ ...tableStyles.th, textAlign: 'right' }}>Part</th>
+                <th style={{ ...tableStyles.th, textAlign: 'right' }}>Suffrages</th>
+                <th style={{ ...tableStyles.th, textAlign: 'center' }}>Évolution</th>
+              </tr>
+            </thead>
+            <tbody>
+              {partisCC.map((p) => (
+                <tr key={p.code}>
+                  <td style={tableStyles.td}>
+                    <span style={{ ...tableStyles.pastille, background: p.couleur }}>{p.code}</span>
+                    {p.nom}
+                  </td>
+                  <td style={{ ...tableStyles.td, textAlign: 'right', fontWeight: 700 }}>{p.sieges}</td>
+                  <td style={{ ...tableStyles.td, textAlign: 'right' }}>
+                    {Math.round((p.sieges / totalCC) * 100)} %
+                  </td>
+                  <td style={{ ...tableStyles.td, textAlign: 'right', color: '#666', fontSize: '0.85rem' }}>
+                    {p.suffrages.toLocaleString('fr-CH')}
+                  </td>
+                  <td style={{ ...tableStyles.td, textAlign: 'center' }}>{p.evolution}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div className="section-block">
+          <h3 className="section-heading">MUNICIPALITÉ ({totalMuni} SIÈGES)</h3>
+          <SeatBar items={partisMuni} total={totalMuni} />
+
+          <div className="commissions-list" style={{ marginTop: '1.5rem' }}>
+            {elusMuni.map((e) => (
+              <div key={e.nom} className="commission-block">
+                <div className="commission-header">
+                  <h3 className="commission-name">{e.nom}</h3>
+                  <span className="badge permanente">{e.parti}</span>
+                </div>
+                <p style={{ color: '#444', fontSize: '0.95rem', marginBottom: '0.25rem' }}>
+                  <strong>{e.fonction}</strong>
+                </p>
+                <p style={{ color: '#666', fontSize: '0.9rem' }}>{e.detail}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="section-block">
+          <h3 className="section-heading">CONSEIL COMMUNAL — ÉLUS PAR PARTI</h3>
+          {elusCCParParti.map((g) => (
+            <div
+              key={g.code}
+              style={{
+                background: 'white',
+                border: '1px solid #E5E7EB',
+                borderRadius: '8px',
+                padding: '1.25rem 1.5rem',
+                marginBottom: '1rem',
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+                <span style={{ ...tableStyles.pastille, background: g.couleur, fontSize: '0.85rem', padding: '0.3rem 0.7rem' }}>{g.code}</span>
+                <h4 style={{ margin: 0, fontSize: '1.05rem', fontWeight: 600 }}>{g.nom}</h4>
+              </div>
+
+              {g.elus.length > 0 ? (
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))',
+                  gap: '0.4rem 1.25rem',
+                  fontSize: '0.9rem',
+                }}>
+                  {g.elus.map((e, idx) => (
+                    <div
+                      key={e.nom}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'baseline',
+                        justifyContent: 'space-between',
+                        gap: '0.5rem',
+                        padding: '0.25rem 0',
+                        borderBottom: '1px dotted #E5E7EB',
+                      }}
+                    >
+                      <span style={{ color: '#1A1A1A' }}>
+                        <span style={{ color: '#999', fontSize: '0.75rem', marginRight: '0.4rem' }}>
+                          {idx + 1}.
+                        </span>
+                        {e.nom}
+                      </span>
+                      <span style={{ color: '#666', fontSize: '0.75rem', whiteSpace: 'nowrap' }}>
+                        {e.suffrages.toLocaleString('fr-CH')} suffr.
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p style={{ color: '#888', fontStyle: 'italic', fontSize: '0.9rem' }}>
+                  Liste nominative non encore renseignée.
+                </p>
+              )}
+
+              {g.sourceUrl && (
+                <a
+                  href={g.sourceUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.3rem',
+                    marginTop: '1rem',
+                    color: '#003366',
+                    fontSize: '0.85rem',
+                    textDecoration: 'none',
+                    fontWeight: 500,
+                  }}
+                >
+                  {g.sourceLabel}
+                  <ChevronRight size={16} />
+                </a>
+              )}
+            </div>
+          ))}
+        </div>
+
+        <div className="info-panel">
+          <h3 className="panel-title">SOURCE OFFICIELLE</h3>
+          <p className="panel-text">
+            Les résultats nominatifs et la répartition des sièges proviennent du site officiel
+            des élections du Canton de Vaud (elections.vd.ch). La composition de la Municipalité
+            a été confirmée à l'issue du 2ᵈ tour du 29 mars 2026.
+          </p>
+          <a
+            href="https://www.elections.vd.ch/votelec/app23/index.html?id=CORP20260308"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+              marginTop: '0.75rem',
+              color: '#003366',
+              fontWeight: 500,
+              textDecoration: 'none',
+            }}
+          >
+            Résultats détaillés sur elections.vd.ch <ChevronRight size={18} />
+          </a>
+        </div>
+      </div>
+    );
+  };
+
+  const renderMedias = () => {
+    const mediasData = {
+      regional: {
+        titre: 'PRESSE RÉGIONALE — VAUD & RIVIERA',
+        items: [
+          { name: '24 heures', desc: 'Quotidien vaudois — référence cantonale', url: 'https://www.24heures.ch' },
+          { name: 'Riviera Chablais', desc: 'Bi-hebdomadaire de la Riviera et du Chablais', url: 'https://www.riviera-chablais.ch' },
+          { name: 'Le Régional', desc: 'Hebdomadaire gratuit Riviera-Chablais-Lavaux', url: 'https://www.leregional.ch' },
+          { name: 'La Télé', desc: 'Télévision régionale Vaud–Fribourg', url: 'https://www.latele.ch' },
+        ],
+      },
+      romand: {
+        titre: 'PRESSE ROMANDE',
+        items: [
+          { name: 'Le Temps', desc: 'Quotidien de référence en Suisse romande', url: 'https://www.letemps.ch' },
+          { name: 'Le Courrier', desc: 'Quotidien indépendant romand', url: 'https://www.lecourrier.ch' },
+          { name: 'Tribune de Genève', desc: 'Quotidien genevois', url: 'https://www.tdg.ch' },
+          { name: 'Heidi.news', desc: 'Média numérique romand indépendant', url: 'https://www.heidi.news' },
+          { name: "L'Illustré", desc: 'Magazine hebdomadaire romand', url: 'https://www.illustre.ch' },
+          { name: 'Watson', desc: 'Média numérique généraliste suisse', url: 'https://www.watson.ch/fr' },
+        ],
+      },
+      audiovisuel: {
+        titre: 'RADIO & TÉLÉVISION',
+        items: [
+          { name: 'RTS Info', desc: 'Actualités radio-télévision suisse romande', url: 'https://www.rts.ch/info/' },
+          { name: 'RTS La 1ère', desc: 'Première chaîne radio romande', url: 'https://www.rts.ch/la-1ere/' },
+          { name: 'Léman Bleu', desc: 'Télévision lémanique', url: 'https://www.lemanbleu.ch' },
+          { name: 'Swissinfo', desc: 'Actualité suisse en plusieurs langues', url: 'https://www.swissinfo.ch/fre' },
+        ],
+      },
+    };
+
+    return (
+      <div className="content-space">
+        <div className="doc-header">
+          <h1 className="doc-title">PRESSE & MÉDIAS</h1>
+          <p className="doc-meta">Sélection des principaux médias romands et régionaux</p>
+        </div>
+
+        {Object.values(mediasData).map((section) => (
+          <div className="resource-block" key={section.titre}>
+            <h3 className="section-heading">{section.titre}</h3>
+            {section.items.map((item) => (
+              <a
+                key={item.name}
+                href={item.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="resource-link"
+              >
+                <div className="resource-info">
+                  <div className="resource-title">{item.name}</div>
+                  <div className="resource-meta">{item.desc}</div>
+                </div>
+                <ChevronRight size={20} />
+              </a>
+            ))}
+          </div>
+        ))}
+
+        <div className="info-panel">
+          <h3 className="panel-title">À PROPOS DE CETTE SÉLECTION</h3>
+          <p className="panel-text">
+            Cette liste rassemble les médias suisses romands utiles pour suivre l'actualité
+            locale, cantonale et nationale. Elle n'est pas exhaustive — n'hésitez pas à
+            signaler un titre manquant pour qu'il soit ajouté.
+          </p>
+        </div>
+      </div>
+    );
+  };
+
   const renderContent = () => {
     switch(currentPage) {
       case 'accueil': return renderAccueil();
@@ -1368,9 +1796,11 @@ const App = () => {
       case 'commissions': return renderCommissions();
       case 'documents': return renderDocuments();
       case 'rues': return renderRues();
+      case 'elections': return renderElections();
       case 'csp-presentation': return renderCSPPresentation();
       case 'csp-programme': return renderCSPProgramme();
       case 'csp-elus': return renderCSPElus();
+      case 'medias': return renderMedias();
       default: return renderAccueil();
     }
   };
