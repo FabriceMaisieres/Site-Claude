@@ -1,0 +1,28 @@
+###############################################################################
+# Configuration Netlify pour le projet "Mémo du Conseiller communal" (Chardonne)
+#
+# Le code applicatif (React + Vite) vit dans le sous-dossier hub-conseiller/.
+# - base    : répertoire où Netlify se place pour exécuter la build
+# - publish : dossier de sortie (relatif à la racine du repo)
+# - command : commande de build
+###############################################################################
+
+[build]
+  base    = "hub-conseiller"
+  publish = "hub-conseiller/dist"
+  command = "npm run build"
+
+[build.environment]
+  # Vite 5 exige Node 18+. On fige sur Node 20 LTS pour la stabilité.
+  NODE_VERSION = "20"
+
+###############################################################################
+# Single Page Application : toutes les routes inconnues renvoient sur index.html
+# pour que le routing côté client fonctionne (rafraîchir une "page" interne ne
+# doit pas donner un 404).
+###############################################################################
+
+[[redirects]]
+  from   = "/*"
+  to     = "/index.html"
+  status = 200

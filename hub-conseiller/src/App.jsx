@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Search, ChevronRight, FileText, Building2, Scale, Book, Home, Menu, X, Users, Vote, Mail, PanelLeftClose, PanelLeftOpen, Newspaper, BarChart3 } from 'lucide-react';
 import SwissMap from './SwissMap.jsx';
+import votationsData from './data/votations.json';
 
 // Logos officiels (servis depuis le dossier public/)
 const LOGO_SUISSE = "/logo_suisse.jpeg";
@@ -141,6 +142,7 @@ const App = () => {
     { id: 'csp-presentation', label: 'Présentation', icon: Users, category: 'CHARDONNE SANS PARTI' },
     { id: 'csp-programme', label: 'Programme & Élections 2026', icon: Vote, category: 'CHARDONNE SANS PARTI' },
     { id: 'csp-elus', label: 'Élus & Contact', icon: Mail, category: 'CHARDONNE SANS PARTI' },
+    { id: 'votations', label: 'Votations', icon: Vote, category: 'VOTATIONS' },
     { id: 'medias', label: 'Presse & médias', icon: Newspaper, category: 'MÉDIAS' }
   ];
 
@@ -1787,6 +1789,102 @@ const App = () => {
     );
   };
 
+  const renderVotations = () => {
+    const { votations, miseAJour, demo } = votationsData;
+
+    const niveauBadge = {
+      federal: { label: 'FÉDÉRAL', bg: '#E8F0F8', color: '#003366' },
+      cantonal: { label: 'CANTONAL', bg: '#E3F1EA', color: '#2A6B4F' },
+    };
+
+    const VotationCard = ({ objet }) => {
+      const badge = niveauBadge[objet.niveau] || niveauBadge.federal;
+      const ref = objet.reference;
+      const oui = Math.max(0, Math.min(100, ref.oui));
+      const non = 100 - oui;
+      return (
+        <div style={{ background: 'white', border: '1px solid #E5E7EB', borderRadius: '10px', padding: '1.25rem' }}>
+          <div style={{ marginBottom: '0.6rem' }}>
+            <span style={{ background: badge.bg, color: badge.color, fontSize: '0.7rem', fontWeight: 700, padding: '0.25rem 0.65rem', borderRadius: '20px', letterSpacing: '0.5px' }}>
+              {badge.label}
+            </span>
+          </div>
+          <div style={{ fontSize: '1.05rem', fontWeight: 700, color: '#003366', marginBottom: '0.3rem' }}>{objet.titre}</div>
+          <div style={{ fontSize: '0.85rem', fontWeight: 600, color: ref.accepte ? '#2A6B4F' : '#B5483D', marginBottom: '0.9rem' }}>
+            {ref.accepte ? 'Accepté' : 'Refusé'} — {ref.lieu}
+          </div>
+
+          <div style={{ display: 'flex', height: '30px', borderRadius: '6px', overflow: 'hidden', border: '1px solid #E0E0E0', marginBottom: '0.25rem' }}>
+            <div style={{ width: `${oui}%`, background: '#3B7A57', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.78rem', fontWeight: 700 }}>
+              {oui >= 18 ? `Oui ${Math.round(oui)}%` : ''}
+            </div>
+            <div style={{ width: `${non}%`, background: '#C25B4F', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.78rem', fontWeight: 700 }}>
+              {non >= 18 ? `Non ${Math.round(non)}%` : ''}
+            </div>
+          </div>
+          <div style={{ fontSize: '0.72rem', color: '#9AA7B4', textAlign: 'right', marginBottom: '0.9rem' }}>Résultat {ref.lieu}</div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: `repeat(${objet.lieux.length}, minmax(0, 1fr))`, gap: '0.6rem' }}>
+            {objet.lieux.map((lieu) => {
+              const focus = lieu.cle === 'chardonne';
+              return (
+                <div key={lieu.cle} style={{ background: focus ? '#E8F0F8' : 'white', border: focus ? '2px solid #003366' : '1px solid #D8E0E8', borderRadius: '8px', padding: '0.6rem' }}>
+                  <div style={{ fontSize: '0.78rem', fontWeight: 600, color: focus ? '#003366' : '#5A6B7C', marginBottom: '0.15rem' }}>{lieu.nom}</div>
+                  <div style={{ fontSize: '1.4rem', fontWeight: 700, color: focus ? '#003366' : '#33444F' }}>{Math.round(lieu.oui)}%</div>
+                  <div style={{ fontSize: '0.72rem', color: lieu.accepte ? '#2A6B4F' : '#B5483D' }}>oui · {lieu.accepte ? 'Accepté' : 'Refusé'}</div>
+                  {lieu.participation != null && (
+                    <div style={{ fontSize: '0.68rem', color: '#9AA7B4', marginTop: '0.2rem' }}>Particip. {Math.round(lieu.participation)}%</div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      );
+    };
+
+    return (
+      <div className="content-space" style={{ maxWidth: '1100px' }}>
+        <div className="doc-header">
+          <h1 className="doc-title">VOTATIONS</h1>
+          <p className="doc-meta">Fédérales et cantonales — résultats avec focus sur Chardonne</p>
+        </div>
+
+        {demo && (
+          <div style={{ background: '#FAEEDA', border: '1px solid #EFC77A', borderRadius: '8px', padding: '0.6rem 1rem', fontSize: '0.85rem', color: '#7A5A12', marginBottom: '1.5rem' }}>
+            Données d'illustration — lancez le script de mise à jour pour afficher les résultats officiels.
+          </div>
+        )}
+
+        {(!votations || votations.length === 0) && (
+          <div className="section-block">
+            <p style={{ color: '#666' }}>Aucune votation enregistrée pour le moment.</p>
+          </div>
+        )}
+
+        {votations && votations.map((v) => (
+          <div className="section-block" key={v.date}>
+            <h3 className="section-heading">{v.dateLabel}</h3>
+            <div style={{ display: 'grid', gap: '1rem' }}>
+              {v.objets.map((objet, i) => (
+                <VotationCard key={i} objet={objet} />
+              ))}
+            </div>
+          </div>
+        ))}
+
+        <div className="info-panel">
+          <h3 className="panel-title">SOURCE DES DONNÉES</h3>
+          <p className="panel-text">
+            Résultats issus de l'open data officiel VoteInfo (Confédération / Office fédéral de la statistique).
+            Le résultat de Chardonne (n° OFS 5882) est comparé à celui du canton de Vaud et de la Suisse.
+            {miseAJour ? ` Dernière mise à jour des données : ${miseAJour}.` : ''}
+          </p>
+        </div>
+      </div>
+    );
+  };
+
   const renderContent = () => {
     switch(currentPage) {
       case 'accueil': return renderAccueil();
@@ -1800,6 +1898,7 @@ const App = () => {
       case 'csp-presentation': return renderCSPPresentation();
       case 'csp-programme': return renderCSPProgramme();
       case 'csp-elus': return renderCSPElus();
+      case 'votations': return renderVotations();
       case 'medias': return renderMedias();
       default: return renderAccueil();
     }

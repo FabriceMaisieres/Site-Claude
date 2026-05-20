@@ -1,0 +1,636 @@
+{
+  "miseAJour": "2026-05-20",
+  "demo": false,
+  "votations": [
+    {
+      "date": "2026-03-08",
+      "dateLabel": "8 mars 2026",
+      "objets": [
+        {
+          "niveau": "federal",
+          "titre": "Initiative populaire « Oui à une monnaie suisse libre et indépendante sous forme de pièces ou de billets (l'argent liquide, c'est la liberté) »",
+          "reference": {
+            "lieu": "Suisse",
+            "oui": 45.6,
+            "accepte": false
+          },
+          "lieux": [
+            {
+              "cle": "chardonne",
+              "nom": "Chardonne",
+              "oui": 35.7,
+              "accepte": false,
+              "participation": 66.7,
+              "ouiAbs": 481,
+              "nonAbs": 865
+            },
+            {
+              "cle": "vaud",
+              "nom": "Vaud",
+              "oui": 40.2,
+              "accepte": false,
+              "participation": 56.5,
+              "ouiAbs": 104706,
+              "nonAbs": 155987
+            },
+            {
+              "cle": "suisse",
+              "nom": "Suisse",
+              "oui": 45.6,
+              "accepte": false,
+              "participation": 55.4,
+              "ouiAbs": 1381191,
+              "nonAbs": 1646845
+            }
+          ]
+        },
+        {
+          "niveau": "federal",
+          "titre": "Arrêté fédéral sur la monnaie suisse et l’approvisionnement en numéraire (contre-projet à l'initiative pour l’argent liquide)",
+          "reference": {
+            "lieu": "Suisse",
+            "oui": 73.4,
+            "accepte": true
+          },
+          "lieux": [
+            {
+              "cle": "chardonne",
+              "nom": "Chardonne",
+              "oui": 81.4,
+              "accepte": true,
+              "participation": 66.7,
+              "ouiAbs": 1074,
+              "nonAbs": 246
+            },
+            {
+              "cle": "vaud",
+              "nom": "Vaud",
+              "oui": 77.5,
+              "accepte": true,
+              "participation": 56.5,
+              "ouiAbs": 195495,
+              "nonAbs": 56672
+            },
+            {
+              "cle": "suisse",
+              "nom": "Suisse",
+              "oui": 73.4,
+              "accepte": true,
+              "participation": 55.4,
+              "ouiAbs": 2169303,
+              "nonAbs": 785762
+            }
+          ]
+        },
+        {
+          "niveau": "federal",
+          "titre": "Initiative pour l’argent liquide et contre-projet: question subsidiaire",
+          "reference": {
+            "lieu": "Suisse",
+            "oui": 37.4,
+            "accepte": false
+          },
+          "lieux": [
+            {
+              "cle": "chardonne",
+              "nom": "Chardonne",
+              "oui": 25.9,
+              "accepte": false,
+              "participation": 66.7,
+              "ouiAbs": 333,
+              "nonAbs": 953
+            },
+            {
+              "cle": "vaud",
+              "nom": "Vaud",
+              "oui": 29.5,
+              "accepte": false,
+              "participation": 56.5,
+              "ouiAbs": 73752,
+              "nonAbs": 176180
+            },
+            {
+              "cle": "suisse",
+              "nom": "Suisse",
+              "oui": 37.4,
+              "accepte": false,
+              "participation": 55.4,
+              "ouiAbs": 1098341,
+              "nonAbs": 1841208
+            }
+          ]
+        },
+        {
+          "niveau": "federal",
+          "titre": "Initiative populaire « 200 francs, ça suffit ! (initiative SSR) »",
+          "reference": {
+            "lieu": "Suisse",
+            "oui": 38.1,
+            "accepte": false
+          },
+          "lieux": [
+            {
+              "cle": "chardonne",
+              "nom": "Chardonne",
+              "oui": 30.7,
+              "accepte": false,
+              "participation": 66.7,
+              "ouiAbs": 431,
+              "nonAbs": 972
+            },
+            {
+              "cle": "vaud",
+              "nom": "Vaud",
+              "oui": 32.9,
+              "accepte": false,
+              "participation": 56.5,
+              "ouiAbs": 88907,
+              "nonAbs": 181070
+            },
+            {
+              "cle": "suisse",
+              "nom": "Suisse",
+              "oui": 38.1,
+              "accepte": false,
+              "participation": 55.8,
+              "ouiAbs": 1188459,
+              "nonAbs": 1934819
+            }
+          ]
+        },
+        {
+          "niveau": "federal",
+          "titre": "Initiative populaire « Pour une politique énergétique et climatique équitable : investir pour la prospérité, le travail et l'environnement (initiative pour un fonds climat) »",
+          "reference": {
+            "lieu": "Suisse",
+            "oui": 29.3,
+            "accepte": false
+          },
+          "lieux": [
+            {
+              "cle": "chardonne",
+              "nom": "Chardonne",
+              "oui": 37.1,
+              "accepte": false,
+              "participation": 66.7,
+              "ouiAbs": 509,
+              "nonAbs": 862
+            },
+            {
+              "cle": "vaud",
+              "nom": "Vaud",
+              "oui": 38.4,
+              "accepte": false,
+              "participation": 56.5,
+              "ouiAbs": 100588,
+              "nonAbs": 161692
+            },
+            {
+              "cle": "suisse",
+              "nom": "Suisse",
+              "oui": 29.3,
+              "accepte": false,
+              "participation": 55.6,
+              "ouiAbs": 897355,
+              "nonAbs": 2165868
+            }
+          ]
+        },
+        {
+          "niveau": "federal",
+          "titre": "Loi fédérale sur l’imposition individuelle",
+          "reference": {
+            "lieu": "Suisse",
+            "oui": 54.3,
+            "accepte": true
+          },
+          "lieux": [
+            {
+              "cle": "chardonne",
+              "nom": "Chardonne",
+              "oui": 68.9,
+              "accepte": true,
+              "participation": 66.7,
+              "ouiAbs": 944,
+              "nonAbs": 426
+            },
+            {
+              "cle": "vaud",
+              "nom": "Vaud",
+              "oui": 68.6,
+              "accepte": true,
+              "participation": 56.4,
+              "ouiAbs": 180709,
+              "nonAbs": 82682
+            },
+            {
+              "cle": "suisse",
+              "nom": "Suisse",
+              "oui": 54.3,
+              "accepte": true,
+              "participation": 55.7,
+              "ouiAbs": 1662477,
+              "nonAbs": 1401322
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2025-11-30",
+      "dateLabel": "30 novembre 2025",
+      "objets": [
+        {
+          "niveau": "federal",
+          "titre": "Initiative populaire « Pour une suisse qui s’engage (initiative service citoyen) »",
+          "reference": {
+            "lieu": "Suisse",
+            "oui": 15.9,
+            "accepte": false
+          },
+          "lieux": [
+            {
+              "cle": "chardonne",
+              "nom": "Chardonne",
+              "oui": 13.8,
+              "accepte": false,
+              "participation": 48.5,
+              "ouiAbs": 141,
+              "nonAbs": 878
+            },
+            {
+              "cle": "vaud",
+              "nom": "Vaud",
+              "oui": 13,
+              "accepte": false,
+              "participation": 41.4,
+              "ouiAbs": 25593,
+              "nonAbs": 171662
+            },
+            {
+              "cle": "suisse",
+              "nom": "Suisse",
+              "oui": 15.9,
+              "accepte": false,
+              "participation": 42.9,
+              "ouiAbs": 379638,
+              "nonAbs": 2014886
+            }
+          ]
+        },
+        {
+          "niveau": "federal",
+          "titre": "Initiative populaire « Pour une politique climatique sociale financée de manière juste fiscalement (initiative pour l’avenir) »",
+          "reference": {
+            "lieu": "Suisse",
+            "oui": 21.7,
+            "accepte": false
+          },
+          "lieux": [
+            {
+              "cle": "chardonne",
+              "nom": "Chardonne",
+              "oui": 23.5,
+              "accepte": false,
+              "participation": 48.5,
+              "ouiAbs": 238,
+              "nonAbs": 774
+            },
+            {
+              "cle": "vaud",
+              "nom": "Vaud",
+              "oui": 29.3,
+              "accepte": false,
+              "participation": 41.3,
+              "ouiAbs": 57545,
+              "nonAbs": 138537
+            },
+            {
+              "cle": "suisse",
+              "nom": "Suisse",
+              "oui": 21.7,
+              "accepte": false,
+              "participation": 43,
+              "ouiAbs": 520173,
+              "nonAbs": 1874301
+            }
+          ]
+        },
+        {
+          "niveau": "cantonal",
+          "titre": "MODIFICATION CONSTITUTIONNELLE Étendre le droit de vote aux Vaudoises et Vaudois, y compris de l’étranger, pour l’élection des conseillères et conseillers aux États",
+          "reference": {
+            "lieu": "Vaud",
+            "oui": 65,
+            "accepte": true
+          },
+          "lieux": [
+            {
+              "cle": "chardonne",
+              "nom": "Chardonne",
+              "oui": 64.3,
+              "accepte": true,
+              "participation": 48.5,
+              "ouiAbs": 653,
+              "nonAbs": 362
+            },
+            {
+              "cle": "vaud",
+              "nom": "Vaud",
+              "oui": 65,
+              "accepte": true,
+              "participation": 42.5,
+              "ouiAbs": 123987,
+              "nonAbs": 66804
+            }
+          ]
+        },
+        {
+          "niveau": "cantonal",
+          "titre": "MODIFICATION CONSTITUTIONNELLE Mettre un terme aux discriminations en matière de droits politiques contre les personnes atteintes de troubles psychiques",
+          "reference": {
+            "lieu": "Vaud",
+            "oui": 26.1,
+            "accepte": false
+          },
+          "lieux": [
+            {
+              "cle": "chardonne",
+              "nom": "Chardonne",
+              "oui": 23.5,
+              "accepte": false,
+              "participation": 48.5,
+              "ouiAbs": 233,
+              "nonAbs": 757
+            },
+            {
+              "cle": "vaud",
+              "nom": "Vaud",
+              "oui": 26.1,
+              "accepte": false,
+              "participation": 42.5,
+              "ouiAbs": 48997,
+              "nonAbs": 138437
+            }
+          ]
+        },
+        {
+          "niveau": "cantonal",
+          "titre": "INITIATIVE POPULAIRE « Pour des droits politiques pour celles et ceux qui vivent ici »",
+          "reference": {
+            "lieu": "Vaud",
+            "oui": 35.2,
+            "accepte": false
+          },
+          "lieux": [
+            {
+              "cle": "chardonne",
+              "nom": "Chardonne",
+              "oui": 27.7,
+              "accepte": false,
+              "participation": 48.5,
+              "ouiAbs": 279,
+              "nonAbs": 729
+            },
+            {
+              "cle": "vaud",
+              "nom": "Vaud",
+              "oui": 35.2,
+              "accepte": false,
+              "participation": 42.5,
+              "ouiAbs": 67007,
+              "nonAbs": 123449
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2025-09-28",
+      "dateLabel": "28 septembre 2025",
+      "objets": [
+        {
+          "niveau": "federal",
+          "titre": "Arrêté fédéral relatif à l'impôt immobilier cantonal sur les résidences secondaires",
+          "reference": {
+            "lieu": "Suisse",
+            "oui": 57.7,
+            "accepte": true
+          },
+          "lieux": [
+            {
+              "cle": "chardonne",
+              "nom": "Chardonne",
+              "oui": 41.7,
+              "accepte": false,
+              "participation": 52.6,
+              "ouiAbs": 459,
+              "nonAbs": 643
+            },
+            {
+              "cle": "vaud",
+              "nom": "Vaud",
+              "oui": 36.2,
+              "accepte": false,
+              "participation": 45.3,
+              "ouiAbs": 76908,
+              "nonAbs": 135269
+            },
+            {
+              "cle": "suisse",
+              "nom": "Suisse",
+              "oui": 57.7,
+              "accepte": true,
+              "participation": 49.5,
+              "ouiAbs": 1579379,
+              "nonAbs": 1156598
+            }
+          ]
+        },
+        {
+          "niveau": "federal",
+          "titre": "Loi fédérale sur l'identité électronique et d'autres moyens de preuves électroniques (Loi sur l'e-ID, LeID)",
+          "reference": {
+            "lieu": "Suisse",
+            "oui": 50.4,
+            "accepte": true
+          },
+          "lieux": [
+            {
+              "cle": "chardonne",
+              "nom": "Chardonne",
+              "oui": 55.8,
+              "accepte": true,
+              "participation": 52.7,
+              "ouiAbs": 613,
+              "nonAbs": 486
+            },
+            {
+              "cle": "vaud",
+              "nom": "Vaud",
+              "oui": 57.2,
+              "accepte": true,
+              "participation": 45.3,
+              "ouiAbs": 121113,
+              "nonAbs": 90671
+            },
+            {
+              "cle": "suisse",
+              "nom": "Suisse",
+              "oui": 50.4,
+              "accepte": true,
+              "participation": 49.6,
+              "ouiAbs": 1384586,
+              "nonAbs": 1363362
+            }
+          ]
+        },
+        {
+          "niveau": "cantonal",
+          "titre": "INITIATIVE POPULAIRE « Sauvons le Mormont »",
+          "reference": {
+            "lieu": "Vaud",
+            "oui": 41.1,
+            "accepte": false
+          },
+          "lieux": [
+            {
+              "cle": "chardonne",
+              "nom": "Chardonne",
+              "oui": 37.1,
+              "accepte": false,
+              "participation": 51.5,
+              "ouiAbs": 385,
+              "nonAbs": 652
+            },
+            {
+              "cle": "vaud",
+              "nom": "Vaud",
+              "oui": 41.1,
+              "accepte": false,
+              "participation": 46.2,
+              "ouiAbs": 80587,
+              "nonAbs": 115617
+            }
+          ]
+        },
+        {
+          "niveau": "cantonal",
+          "titre": "CONTRE-PROJET « Économie circulaire »",
+          "reference": {
+            "lieu": "Vaud",
+            "oui": 73.3,
+            "accepte": true
+          },
+          "lieux": [
+            {
+              "cle": "chardonne",
+              "nom": "Chardonne",
+              "oui": 73.9,
+              "accepte": true,
+              "participation": 51.5,
+              "ouiAbs": 765,
+              "nonAbs": 270
+            },
+            {
+              "cle": "vaud",
+              "nom": "Vaud",
+              "oui": 73.3,
+              "accepte": true,
+              "participation": 46.2,
+              "ouiAbs": 142451,
+              "nonAbs": 51931
+            }
+          ]
+        },
+        {
+          "niveau": "cantonal",
+          "titre": "QUESTION SUBSIDIAIRE",
+          "reference": {
+            "lieu": "Vaud",
+            "oui": 21.7,
+            "accepte": false
+          },
+          "lieux": [
+            {
+              "cle": "chardonne",
+              "nom": "Chardonne",
+              "oui": 17.3,
+              "accepte": false,
+              "participation": 51.5,
+              "ouiAbs": 166,
+              "nonAbs": 792
+            },
+            {
+              "cle": "vaud",
+              "nom": "Vaud",
+              "oui": 21.7,
+              "accepte": false,
+              "participation": 46.2,
+              "ouiAbs": 38963,
+              "nonAbs": 140782
+            }
+          ]
+        },
+        {
+          "niveau": "cantonal",
+          "titre": "MODIFICATION CONSTITUTIONNELLE Préciser le champ d’application du quorum dans le cadre des élections communales et cantonales",
+          "reference": {
+            "lieu": "Vaud",
+            "oui": 52.7,
+            "accepte": true
+          },
+          "lieux": [
+            {
+              "cle": "chardonne",
+              "nom": "Chardonne",
+              "oui": 50.6,
+              "accepte": true,
+              "participation": 51.6,
+              "ouiAbs": 510,
+              "nonAbs": 497
+            },
+            {
+              "cle": "vaud",
+              "nom": "Vaud",
+              "oui": 52.7,
+              "accepte": true,
+              "participation": 46.2,
+              "ouiAbs": 99789,
+              "nonAbs": 89540
+            }
+          ]
+        },
+        {
+          "niveau": "cantonal",
+          "titre": "MODIFICATION CONSTITUTIONNELLE Faciliter l’accès aux droits politiques communaux pour les étrangères et les étrangers",
+          "reference": {
+            "lieu": "Vaud",
+            "oui": 43.8,
+            "accepte": false
+          },
+          "lieux": [
+            {
+              "cle": "chardonne",
+              "nom": "Chardonne",
+              "oui": 41.2,
+              "accepte": false,
+              "participation": 51.6,
+              "ouiAbs": 440,
+              "nonAbs": 629
+            },
+            {
+              "cle": "vaud",
+              "nom": "Vaud",
+              "oui": 43.8,
+              "accepte": false,
+              "participation": 46.2,
+              "ouiAbs": 89161,
+              "nonAbs": 114179
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
