@@ -115,6 +115,71 @@ const commissions = [
   }
 ];
 
+// Instruments à disposition des conseillers (Loi sur les communes, art. 31 ss)
+// Source : aide-mémoire DGAIC — État de Vaud
+const instrumentsConseiller = [
+  {
+    nom: "Le postulat",
+    base: "art. 31 al. 1 let. a LC",
+    baseType: "loi",
+    definition: "Invite la Municipalité à étudier l'opportunité d'une mesure et à rédiger un rapport au Conseil.",
+    porteSur: "compétence du Conseil ou de la Municipalité",
+    exemple: "politique climatique, mobilité, entretien du patrimoine",
+    effet: "Non contraignant",
+    effetType: "souple"
+  },
+  {
+    nom: "La motion",
+    base: "art. 31 al. 1 let. b LC",
+    baseType: "loi",
+    definition: "Charge la Municipalité de présenter un projet de décision du Conseil (sous forme de préavis).",
+    porteSur: "compétence du Conseil uniquement",
+    exemple: "révision d'un règlement communal, politique salariale de l'administration",
+    effet: "Contraignant",
+    effetType: "fort"
+  },
+  {
+    nom: "Le projet de règlement ou de décision",
+    base: "art. 31 al. 1 let. c LC",
+    baseType: "loi",
+    definition: "Texte rédigé de toutes pièces par le conseiller ; la Municipalité doit alors rédiger un préavis.",
+    porteSur: "compétence du Conseil uniquement",
+    exemple: "modification du règlement du Conseil, indemnités des élus",
+    effet: "Contraignant",
+    effetType: "fort"
+  },
+  {
+    nom: "L'interpellation",
+    base: "art. 34 LC",
+    baseType: "loi",
+    definition: "Demande d'explication à la Municipalité sur un fait de son administration. Peut se conclure par une résolution sans injonction.",
+    porteSur: "un fait de l'administration municipale",
+    exemple: "horaires d'ouverture du greffe, entretien d'un espace public",
+    effet: "Non contraignant · appui de 5 membres requis",
+    effetType: "souple"
+  },
+  {
+    nom: "L'amendement",
+    base: "modification en séance",
+    baseType: "special",
+    definition: "Modifie un texte en cours d'examen (préavis, projet de règlement) pendant le débat. Ce n'est pas un « droit de proposition » au sens de l'art. 31 LC.",
+    porteSur: "doit rester dans la compétence du Conseil (séparation des pouvoirs)",
+    exemple: "revoir un montant ou un article d'un préavis soumis au vote",
+    effet: "Modifie la proposition débattue",
+    effetType: "souple"
+  },
+  {
+    nom: "La pétition",
+    base: "art. 34b ss LC",
+    baseType: "loi",
+    definition: "Requête écrite adressée aux autorités, qui doit recevoir une réponse. Seul instrument ouvert à toute personne, membre du Conseil ou non.",
+    porteSur: "toute affaire de compétence des autorités",
+    exemple: "demande collective d'habitants sur un sujet communal",
+    effet: "Non contraignant · ouverte à tous",
+    effetType: "souple"
+  }
+];
+
 const App = () => {
   const [currentPage, setCurrentPage] = useState('accueil');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -288,6 +353,58 @@ const App = () => {
               })}
             </div>
           ))}
+        </div>
+
+        <div className="section-block" style={{ marginTop: '2.5rem' }}>
+          <h2 className="titre-section">INSTRUMENTS DU CONSEILLER COMMUNAL</h2>
+          <p style={{ color: '#5A6B7C', fontSize: '0.9rem', marginBottom: '1.25rem' }}>
+            Les droits de proposition selon la Loi sur les communes (LC), art. 31 et suivants.
+          </p>
+
+          <div style={{ display: 'flex', gap: '1.25rem', flexWrap: 'wrap', fontSize: '0.8rem', color: '#5A6B7C', marginBottom: '1.25rem' }}>
+            <span><span style={{ display: 'inline-block', width: '10px', height: '10px', borderRadius: '50%', background: '#2A6B4F', marginRight: '0.35rem' }}></span>Contraignant</span>
+            <span><span style={{ display: 'inline-block', width: '10px', height: '10px', borderRadius: '50%', background: '#9AA7B4', marginRight: '0.35rem' }}></span>Non contraignant</span>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1rem' }}>
+            {instrumentsConseiller.map((it) => (
+              <div key={it.nom} style={{ background: 'white', border: '1px solid #D8E0E8', borderRadius: '10px', padding: '1rem 1.1rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                  <span style={{ fontSize: '1.05rem', fontWeight: 700, color: '#003366' }}>{it.nom}</span>
+                  <span style={{
+                    background: it.baseType === 'special' ? '#FAEEDA' : '#E8F0F8',
+                    color: it.baseType === 'special' ? '#7A5A12' : '#003366',
+                    fontSize: '0.7rem', fontWeight: 700, padding: '0.2rem 0.55rem', borderRadius: '20px', whiteSpace: 'nowrap'
+                  }}>{it.base}</span>
+                </div>
+                <div style={{ fontSize: '0.9rem', color: '#33444F', lineHeight: 1.6, marginBottom: '0.6rem' }}>{it.definition}</div>
+                <div style={{ fontSize: '0.83rem', color: '#5A6B7C', marginBottom: '0.2rem' }}><strong style={{ fontWeight: 600 }}>Porte sur :</strong> {it.porteSur}</div>
+                <div style={{ fontSize: '0.83rem', color: '#5A6B7C', marginBottom: '0.7rem' }}><strong style={{ fontWeight: 600 }}>Exemple :</strong> {it.exemple}</div>
+                <span style={{
+                  background: it.effetType === 'fort' ? '#E3F1EA' : '#F1EFE8',
+                  color: it.effetType === 'fort' ? '#2A6B4F' : '#5F5E5A',
+                  fontSize: '0.72rem', padding: '0.2rem 0.55rem', borderRadius: '20px'
+                }}>{it.effet}</span>
+              </div>
+            ))}
+          </div>
+
+          <div className="info-panel" style={{ marginTop: '1.5rem' }}>
+            <h3 className="panel-title">SOURCE OFFICIELLE</h3>
+            <p className="panel-text">
+              Aide-mémoire de la Direction générale des affaires institutionnelles et des communes (DGAIC) —
+              État de Vaud, « Droit de proposition des conseillers communaux ou généraux ». La LC prévoit
+              aussi la question ou simple vœu (art. 34a LC).{' '}
+              <a
+                href="https://publication.vd.ch/publications/dgaic/aide-memoire/autorites/droit-de-proposition-des-conseillers-communaux-ou-generaux"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: '#003366', fontWeight: 600 }}
+              >
+                Consulter la page officielle
+              </a>
+            </p>
+          </div>
         </div>
       </div>
     );
