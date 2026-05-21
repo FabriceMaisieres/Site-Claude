@@ -3,13 +3,13 @@
 #
 # Le code applicatif (React + Vite) vit dans le sous-dossier hub-conseiller/.
 # - base    : répertoire où Netlify se place pour exécuter la build
-# - publish : dossier de sortie (relatif à la racine du repo)
+# - publish : dossier de sortie, RELATIF au base (donc "dist" = hub-conseiller/dist)
 # - command : commande de build
 ###############################################################################
 
 [build]
   base    = "hub-conseiller"
-  publish = "hub-conseiller/dist"
+  publish = "dist"
   command = "npm run build"
 
 [build.environment]
