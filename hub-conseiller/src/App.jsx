@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, ChevronRight, FileText, Building2, Scale, Book, Home, Menu, X, Users, Vote, Mail, PanelLeftClose, PanelLeftOpen, Newspaper, BarChart3 } from 'lucide-react';
+import { Search, ChevronRight, FileText, Building2, Scale, Book, Home, Menu, X, Users, Vote, Mail, PanelLeftClose, PanelLeftOpen, Newspaper, BarChart3, GraduationCap } from 'lucide-react';
 import SwissMap from './SwissMap.jsx';
 import votationsData from './data/votations.json';
 
@@ -186,6 +186,7 @@ const App = () => {
   const [expandedChapitres, setExpandedChapitres] = useState({});
   const [dateTime, setDateTime] = useState(new Date());
   const [sidebarHidden, setSidebarHidden] = useState(false);
+  const [weather, setWeather] = useState({ loading: true });
 
   // Mise à jour de l'heure toutes les secondes
   useEffect(() => {
@@ -195,11 +196,53 @@ const App = () => {
     return () => clearInterval(timer);
   }, []);
 
+  // Météo de Chardonne (Open-Meteo, gratuit, sans clé) — rafraîchie toutes les 30 min
+  useEffect(() => {
+    let cancelled = false;
+    const fetchWeather = async () => {
+      try {
+        const res = await fetch(
+          'https://api.open-meteo.com/v1/forecast?latitude=46.4833&longitude=6.8333&current=temperature_2m,weather_code&timezone=Europe%2FZurich'
+        );
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const data = await res.json();
+        if (cancelled) return;
+        setWeather({
+          temp: data?.current?.temperature_2m,
+          code: data?.current?.weather_code,
+          loading: false
+        });
+      } catch (e) {
+        if (!cancelled) setWeather({ loading: false, error: true });
+      }
+    };
+    fetchWeather();
+    const interval = setInterval(fetchWeather, 30 * 60 * 1000);
+    return () => { cancelled = true; clearInterval(interval); };
+  }, []);
+
+  // Description WMO weather code (https://open-meteo.com/en/docs)
+  const describeWeather = (code) => {
+    if (code === 0) return { icon: '☀️', label: 'Ensoleillé' };
+    if (code === 1) return { icon: '🌤️', label: 'Peu nuageux' };
+    if (code === 2) return { icon: '⛅', label: 'Nuageux' };
+    if (code === 3) return { icon: '☁️', label: 'Couvert' };
+    if (code === 45 || code === 48) return { icon: '🌫️', label: 'Brouillard' };
+    if (code >= 51 && code <= 57) return { icon: '🌦️', label: 'Bruine' };
+    if (code >= 61 && code <= 67) return { icon: '🌧️', label: 'Pluie' };
+    if (code >= 71 && code <= 77) return { icon: '🌨️', label: 'Neige' };
+    if (code >= 80 && code <= 82) return { icon: '🌦️', label: 'Averses' };
+    if (code >= 85 && code <= 86) return { icon: '🌨️', label: 'Averses de neige' };
+    if (code >= 95) return { icon: '⛈️', label: 'Orage' };
+    return { icon: '☁️', label: '—' };
+  };
+
   const navigation = [
     { id: 'accueil', label: 'Accueil', icon: Home, category: null },
     { id: 'cantonal', label: 'Canton de Vaud', icon: Book, category: 'CANTON' },
     { id: 'district', label: 'District Riviera-Pays-d\'Enhaut', icon: Building2, category: 'DISTRICT' },
     { id: 'communal', label: 'Règlements communaux', icon: Building2, category: 'COMMUNE' },
+    { id: 'formations', label: 'Se former', icon: GraduationCap, category: 'COMMUNE' },
     { id: 'commissions', label: 'Commissions', icon: FileText, category: 'COMMUNE' },
     { id: 'documents', label: 'Documents officiels (site web)', icon: FileText, category: 'COMMUNE' },
     { id: 'rues', label: 'Carte & Rues', icon: FileText, category: 'COMMUNE' },
@@ -1906,6 +1949,113 @@ const App = () => {
     );
   };
 
+  const renderFormations = () => {
+    const modulesLigne = [
+      { titre: "Conseil communal ou général : bien démarrer", statut: "Disponible", url: "https://share.articulate.com/nBsdVtDgAxYfUjAFdgt1Z" },
+      { titre: "Les outils et les droits d'initiative", statut: "Dès le 30 juin 2026", url: null },
+      { titre: "Le droit à l'information des élus", statut: "Bientôt disponible", url: null },
+      { titre: "Les amendements et sous-amendements", statut: "Bientôt disponible", url: null },
+      { titre: "La récusation", statut: "Bientôt disponible", url: null },
+      { titre: "Les règlements des conseils communaux et généraux", statut: "Bientôt disponible", url: null },
+      { titre: "Les commissions ad hoc et permanentes", statut: "Bientôt disponible", url: null },
+      { titre: "Les commissions de gestion et des finances", statut: "Bientôt disponible", url: null },
+      { titre: "Les finances communales, le budget et les comptes", statut: "Bientôt disponible", url: null },
+      { titre: "Les crédits d'investissement et le suivi des projets", statut: "Bientôt disponible", url: null }
+    ];
+
+    const couleurStatut = (s) => {
+      if (s === 'Disponible') return { bg: '#E3F1EA', color: '#2A6B4F' };
+      if (s.startsWith('Dès')) return { bg: '#E8F0F8', color: '#003366' };
+      return { bg: '#F1EFE8', color: '#5F5E5A' };
+    };
+
+    return (
+      <div className="content-space" style={{ maxWidth: '1100px' }}>
+        <div className="doc-header">
+          <h1 className="doc-title">SE FORMER</h1>
+          <p className="doc-meta">Formations à destination des communes — État de Vaud</p>
+        </div>
+
+        <div style={{ background: '#E8F0F8', border: '1px solid #C9DAEC', borderRadius: '10px', padding: '1rem 1.25rem', marginBottom: '1.5rem' }}>
+          <h3 style={{ fontSize: '1.05rem', color: '#003366', marginBottom: '0.5rem', fontWeight: 700 }}>Au top pour ma commune !</h3>
+          <p style={{ color: '#33444F', fontSize: '0.92rem', lineHeight: 1.6 }}>
+            La DGAIC, avec plusieurs services de l'État, propose une large offre de formations destinées
+            aux élu·e·s ainsi qu'aux collaboratrices et collaborateurs communaux.{' '}
+            <strong>Entièrement prises en charge par le Canton, elles sont gratuites pour les communes vaudoises.</strong>
+          </p>
+        </div>
+
+        <div className="section-block">
+          <h3 className="section-heading">FORMATIONS EN LIGNE — CONSEILS COMMUNAUX ET GÉNÉRAUX</h3>
+          <p style={{ color: '#5A6B7C', fontSize: '0.88rem', marginBottom: '1rem', lineHeight: 1.5 }}>
+            Accessibles en tout temps, ces modules proposent des repères concrets sur le fonctionnement du conseil,
+            le rôle des conseillères et conseillers, et les principaux outils à disposition.
+          </p>
+          <div style={{ display: 'grid', gap: '0.5rem' }}>
+            {modulesLigne.map((m, i) => {
+              const c = couleurStatut(m.statut);
+              return (
+                <div key={i} style={{ background: 'white', border: '1px solid #D8E0E8', borderRadius: '8px', padding: '0.75rem 1rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.75rem' }}>
+                  <div style={{ fontSize: '0.92rem', color: '#33444F' }}>{m.titre}</div>
+                  {m.url ? (
+                    <a href={m.url} target="_blank" rel="noopener noreferrer" style={{
+                      background: '#003366', color: 'white', fontSize: '0.75rem', fontWeight: 700,
+                      padding: '0.3rem 0.8rem', borderRadius: '20px', textDecoration: 'none', whiteSpace: 'nowrap'
+                    }}>Suivre →</a>
+                  ) : (
+                    <span style={{ background: c.bg, color: c.color, fontSize: '0.72rem', fontWeight: 600, padding: '0.25rem 0.65rem', borderRadius: '20px', whiteSpace: 'nowrap' }}>
+                      {m.statut}
+                    </span>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="section-block">
+          <h3 className="section-heading">FORMATION CONTINUE POUR TOUTES ET TOUS</h3>
+          <p style={{ color: '#33444F', fontSize: '0.95rem', lineHeight: 1.6, marginBottom: '0.9rem' }}>
+            Mieux comprendre le fonctionnement des institutions communales, traiter une demande de naturalisation,
+            se prémunir des cyber-risques, élaborer un Plan énergie et climat communal… le catalogue du{' '}
+            <strong>Centre d'éducation permanente (CEP)</strong> couvre l'ensemble des thématiques utiles.
+          </p>
+          <a href="https://cep.swiss/au-top-pour-ma-commune/" target="_blank" rel="noopener noreferrer" style={{
+            display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
+            background: '#003366', color: 'white', fontSize: '0.9rem', fontWeight: 600,
+            padding: '0.65rem 1.25rem', borderRadius: '8px', textDecoration: 'none'
+          }}>
+            Catalogue CEP — Au top pour ma commune <ChevronRight size={16} />
+          </a>
+        </div>
+
+        <a href="https://www.vd.ch/etat-droit-finances/communes/formations-a-destination-des-communes"
+           target="_blank" rel="noopener noreferrer"
+           style={{
+             display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+             background: '#003366', color: 'white', padding: '1rem 1.5rem',
+             borderRadius: '10px', textDecoration: 'none', marginTop: '1.5rem'
+           }}>
+          <div>
+            <div style={{ fontSize: '0.78rem', opacity: 0.85, marginBottom: '0.15rem' }}>Source officielle</div>
+            <div style={{ fontSize: '1rem', fontWeight: 600 }}>Page « Formations à destination des communes » — vd.ch</div>
+          </div>
+          <ChevronRight size={24} />
+        </a>
+
+        <div className="info-panel" style={{ marginTop: '1.5rem' }}>
+          <h3 className="panel-title">CONTACT</h3>
+          <p className="panel-text">
+            Direction générale des affaires institutionnelles et des communes (DGAIC)<br />
+            Place du Château 1 · 1014 Lausanne<br />
+            <a href="tel:+41213164545" style={{ color: '#003366' }}>021 316 45 45</a> ·{' '}
+            <a href="mailto:info.dgaic@vd.ch" style={{ color: '#003366' }}>info.dgaic@vd.ch</a>
+          </p>
+        </div>
+      </div>
+    );
+  };
+
   const renderVotations = () => {
     const { votations, miseAJour, demo } = votationsData;
 
@@ -2008,6 +2158,7 @@ const App = () => {
       case 'cantonal': return renderCantonal();
       case 'district': return renderDistrict();
       case 'communal': return renderCommunal();
+      case 'formations': return renderFormations();
       case 'commissions': return renderCommissions();
       case 'documents': return renderDocuments();
       case 'rues': return renderRues();
@@ -2085,10 +2236,26 @@ const App = () => {
                 })}
               </div>
             </div>
-            <div className="weather-display">
-              <span className="weather-icon">☀️</span>
-              <span className="weather-temp">10.5°C</span>
-              <span className="weather-condition">Ensoleillé</span>
+            <div className="weather-display" title="Météo de Chardonne (Open-Meteo)">
+              {weather.loading ? (
+                <>
+                  <span className="weather-icon">⌛</span>
+                  <span className="weather-temp">…</span>
+                  <span className="weather-condition">Chargement</span>
+                </>
+              ) : weather.error || weather.temp == null ? (
+                <>
+                  <span className="weather-icon">☁️</span>
+                  <span className="weather-temp">—</span>
+                  <span className="weather-condition">Indisponible</span>
+                </>
+              ) : (
+                <>
+                  <span className="weather-icon">{describeWeather(weather.code).icon}</span>
+                  <span className="weather-temp">{Math.round(weather.temp)}°C</span>
+                  <span className="weather-condition">{describeWeather(weather.code).label}</span>
+                </>
+              )}
             </div>
           </div>
           <button className="menu-btn" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
