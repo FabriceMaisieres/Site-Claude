@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, ChevronRight, FileText, Building2, Scale, Book, Home, Menu, X, Users, Vote, Mail, PanelLeftClose, PanelLeftOpen, Newspaper, BarChart3, GraduationCap } from 'lucide-react';
+import { Search, ChevronRight, FileText, Building2, Scale, Book, Home, Menu, X, Users, Vote, Mail, PanelLeftClose, PanelLeftOpen, Newspaper, BarChart3, GraduationCap, BookOpen } from 'lucide-react';
 import SwissMap from './SwissMap.jsx';
 import votationsData from './data/votations.json';
 
@@ -116,67 +116,113 @@ const commissions = [
 ];
 
 // Instruments à disposition des conseillers (Loi sur les communes, art. 31 ss)
-// Source : aide-mémoire DGAIC — État de Vaud
+// Source unique : aide-mémoire DGAIC — État de Vaud. Textes et exemples repris
+// tels quels de la publication officielle, aucun ajout interprétatif.
 const instrumentsConseiller = [
   {
     nom: "Le postulat",
     base: "art. 31 al. 1 let. a LC",
     baseType: "loi",
-    definition: "Invite la Municipalité à étudier l'opportunité d'une mesure et à rédiger un rapport au Conseil.",
+    definition: "Le postulat est une invitation à la Municipalité d'étudier l'opportunité de prendre une mesure ou de faire une proposition dans un domaine particulier et de dresser un rapport à l'attention du Conseil.",
     porteSur: "compétence du Conseil ou de la Municipalité",
-    exemple: "politique climatique, mobilité, entretien du patrimoine",
+    exemple: "politique climatique, mobilité, entretien du patrimoine, gestion des espaces publics",
     effet: "Non contraignant",
-    effetType: "souple"
+    effetType: "souple",
+    forme: "Demande écrite",
+    soutien: "Majorité du Conseil",
+    reponseMuni: "Rapport",
+    resultat: "Débat au Conseil et vote",
+    schemaPdf: "https://publication.vd.ch/fileadmin/pub/dgaic/Aide-memoire/Autorites/Documents/210714_schemas_postulat.pdf"
   },
   {
     nom: "La motion",
     base: "art. 31 al. 1 let. b LC",
     baseType: "loi",
-    definition: "Charge la Municipalité de présenter un projet de décision du Conseil (sous forme de préavis).",
+    definition: "La motion est une demande à la Municipalité de présenter un projet de décision du Conseil général/communal. La motion ne peut porter que sur une compétence du Conseil.",
     porteSur: "compétence du Conseil uniquement",
-    exemple: "révision d'un règlement communal, politique salariale de l'administration",
+    exemple: "mise à jour de plan d'affectation, de règlements communaux, de la politique salariale de l'administration communale",
     effet: "Contraignant",
-    effetType: "fort"
+    effetType: "fort",
+    forme: "Proposition rédigée en termes généraux",
+    soutien: "Majorité du Conseil",
+    reponseMuni: "Projet de décision / étude ou contre-projet",
+    resultat: "Débat au Conseil et vote",
+    schemaPdf: "https://publication.vd.ch/fileadmin/pub/dgaic/Aide-memoire/Autorites/Documents/210714_schemas_motion.pdf"
   },
   {
     nom: "Le projet de règlement ou de décision",
     base: "art. 31 al. 1 let. c LC",
     baseType: "loi",
-    definition: "Texte rédigé de toutes pièces par le conseiller ; la Municipalité doit alors rédiger un préavis.",
+    definition: "Le projet de règlement ou de décision du Conseil est un texte rédigé de toute pièce par l'auteur·e de la proposition. Le projet proposé ne peut porter que sur une compétence du Conseil.",
     porteSur: "compétence du Conseil uniquement",
-    exemple: "modification du règlement du Conseil, indemnités des élus",
+    exemple: "amendement d'une disposition du règlement du conseil communal ou général, modification des indemnités des élu·e·s",
     effet: "Contraignant",
-    effetType: "fort"
+    effetType: "fort",
+    forme: "Proposition entièrement rédigée",
+    soutien: "Majorité du Conseil",
+    reponseMuni: "Projet de règlement",
+    resultat: "Débat au Conseil et vote",
+    schemaPdf: "https://publication.vd.ch/fileadmin/pub/dgaic/Aide-memoire/Autorites/Documents/210714_schemas_reglement.pdf"
   },
   {
     nom: "L'interpellation",
     base: "art. 34 LC",
     baseType: "loi",
-    definition: "Demande d'explication à la Municipalité sur un fait de son administration. Peut se conclure par une résolution sans injonction.",
+    definition: "L'interpellation est une demande d'explication adressée à la Municipalité sur un fait de son administration. Elle ne comprend ni le pouvoir d'annuler ou de modifier les décisions municipales, ni celui d'adresser des instructions impératives à la Municipalité.",
     porteSur: "un fait de l'administration municipale",
-    exemple: "horaires d'ouverture du greffe, entretien d'un espace public",
-    effet: "Non contraignant · appui de 5 membres requis",
-    effetType: "souple"
+    exemple: "demande d'explication sur l'action mise en place par la municipalité relative au nettoyage de la plage ou à l'horaire d'ouverture des bureaux du greffe",
+    effet: "Non contraignant",
+    effetType: "souple",
+    forme: "Demande écrite",
+    soutien: "5 membres au minimum",
+    reponseMuni: "Réponse orale",
+    resultat: "Résolution",
+    schemaPdf: "https://publication.vd.ch/fileadmin/pub/dgaic/Aide-memoire/Autorites/Documents/210714_schemas_interpellation.pdf"
+  },
+  {
+    nom: "La question ou le simple vœu",
+    base: "art. 34a LC",
+    baseType: "loi",
+    definition: "Ce sont des demandes adressées à la Municipalité qui ne sont pas soumises à une forme spécifique. Elles sont en règle générale traitées dans le point de l'ordre du jour relatif aux questions et interventions diverses.",
+    porteSur: "toute demande à la Municipalité",
+    exemple: null,
+    effet: "Non contraignant · sans forme",
+    effetType: "souple",
+    forme: "Exprimé oralement",
+    soutien: "Aucun",
+    reponseMuni: "Réponse orale",
+    resultat: "Aucun",
+    schemaPdf: "https://publication.vd.ch/fileadmin/pub/dgaic/Aide-memoire/Autorites/Documents/210714_schemas_question_voeu.pdf"
   },
   {
     nom: "L'amendement",
     base: "modification en séance",
     baseType: "special",
-    definition: "Modifie un texte en cours d'examen (préavis, projet de règlement) pendant le débat. Ce n'est pas un « droit de proposition » au sens de l'art. 31 LC.",
+    definition: "Modifie un texte en cours d'examen pendant le débat. Ce n'est pas un « droit de proposition » au sens de l'art. 31 LC.",
     porteSur: "doit rester dans la compétence du Conseil (séparation des pouvoirs)",
-    exemple: "revoir un montant ou un article d'un préavis soumis au vote",
+    exemple: null,
     effet: "Modifie la proposition débattue",
-    effetType: "souple"
+    effetType: "souple",
+    forme: null,
+    soutien: null,
+    reponseMuni: null,
+    resultat: null,
+    schemaPdf: null
   },
   {
     nom: "La pétition",
     base: "art. 34b ss LC",
     baseType: "loi",
-    definition: "Requête écrite adressée aux autorités, qui doit recevoir une réponse. Seul instrument ouvert à toute personne, membre du Conseil ou non.",
+    definition: "C'est un droit qui garantit à chacun·e (électeur·trice de la commune ou non) la possibilité d'adresser en tout temps aux autorités des requêtes, des propositions, des critiques ou des réclamations dans les affaires de leur compétence. Elle doit être déposée en la forme écrite.",
     porteSur: "toute affaire de compétence des autorités",
-    exemple: "demande collective d'habitants sur un sujet communal",
+    exemple: null,
     effet: "Non contraignant · ouverte à tous",
-    effetType: "souple"
+    effetType: "souple",
+    forme: null,
+    soutien: null,
+    reponseMuni: null,
+    resultat: null,
+    schemaPdf: null
   }
 ];
 
@@ -240,6 +286,7 @@ const App = () => {
   const navigation = [
     { id: 'accueil', label: 'Accueil', icon: Home, category: null },
     { id: 'cantonal', label: 'Canton de Vaud', icon: Book, category: 'CANTON' },
+    { id: 'aide-memoire', label: 'Aide-mémoire DGAIC', icon: BookOpen, category: 'CANTON' },
     { id: 'district', label: 'District Riviera-Pays-d\'Enhaut', icon: Building2, category: 'DISTRICT' },
     { id: 'communal', label: 'Règlements communaux', icon: Building2, category: 'COMMUNE' },
     { id: 'formations', label: 'Se former', icon: GraduationCap, category: 'COMMUNE' },
@@ -409,9 +456,9 @@ const App = () => {
             <span><span style={{ display: 'inline-block', width: '10px', height: '10px', borderRadius: '50%', background: '#9AA7B4', marginRight: '0.35rem' }}></span>Non contraignant</span>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1rem' }}>
             {instrumentsConseiller.map((it) => (
-              <div key={it.nom} style={{ background: 'white', border: '1px solid #D8E0E8', borderRadius: '10px', padding: '1rem 1.1rem' }}>
+              <div key={it.nom} style={{ background: 'white', border: '1px solid #D8E0E8', borderRadius: '10px', padding: '1rem 1.1rem', display: 'flex', flexDirection: 'column' }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.5rem', marginBottom: '0.5rem' }}>
                   <span style={{ fontSize: '1.05rem', fontWeight: 700, color: '#003366' }}>{it.nom}</span>
                   <span style={{
@@ -422,12 +469,33 @@ const App = () => {
                 </div>
                 <div style={{ fontSize: '0.9rem', color: '#33444F', lineHeight: 1.6, marginBottom: '0.6rem' }}>{it.definition}</div>
                 <div style={{ fontSize: '0.83rem', color: '#5A6B7C', marginBottom: '0.2rem' }}><strong style={{ fontWeight: 600 }}>Porte sur :</strong> {it.porteSur}</div>
-                <div style={{ fontSize: '0.83rem', color: '#5A6B7C', marginBottom: '0.7rem' }}><strong style={{ fontWeight: 600 }}>Exemple :</strong> {it.exemple}</div>
-                <span style={{
-                  background: it.effetType === 'fort' ? '#E3F1EA' : '#F1EFE8',
-                  color: it.effetType === 'fort' ? '#2A6B4F' : '#5F5E5A',
-                  fontSize: '0.72rem', padding: '0.2rem 0.55rem', borderRadius: '20px'
-                }}>{it.effet}</span>
+                {it.exemple && (
+                  <div style={{ fontSize: '0.83rem', color: '#5A6B7C', marginBottom: '0.5rem' }}><strong style={{ fontWeight: 600 }}>Exemple :</strong> {it.exemple}</div>
+                )}
+
+                {(it.forme || it.soutien || it.reponseMuni || it.resultat) && (
+                  <div style={{ background: '#F5F7FA', border: '1px solid #E1E7EE', borderRadius: '8px', padding: '0.6rem 0.75rem', margin: '0.5rem 0 0.6rem', fontSize: '0.8rem', color: '#33444F' }}>
+                    <div style={{ fontSize: '0.7rem', fontWeight: 700, color: '#5A6B7C', letterSpacing: '0.5px', marginBottom: '0.35rem' }}>SELON LA DGAIC</div>
+                    {it.forme && <div style={{ marginBottom: '0.15rem' }}><strong style={{ fontWeight: 600 }}>Forme de l'initiative :</strong> {it.forme}</div>}
+                    {it.soutien && <div style={{ marginBottom: '0.15rem' }}><strong style={{ fontWeight: 600 }}>Soutien nécessaire :</strong> {it.soutien}</div>}
+                    {it.reponseMuni && <div style={{ marginBottom: '0.15rem' }}><strong style={{ fontWeight: 600 }}>Réponse de la Municipalité :</strong> {it.reponseMuni}</div>}
+                    {it.resultat && <div><strong style={{ fontWeight: 600 }}>Résultat possible :</strong> {it.resultat}</div>}
+                  </div>
+                )}
+
+                <div style={{ marginTop: 'auto', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '0.5rem' }}>
+                  <span style={{
+                    background: it.effetType === 'fort' ? '#E3F1EA' : '#F1EFE8',
+                    color: it.effetType === 'fort' ? '#2A6B4F' : '#5F5E5A',
+                    fontSize: '0.72rem', padding: '0.2rem 0.55rem', borderRadius: '20px'
+                  }}>{it.effet}</span>
+                  {it.schemaPdf && (
+                    <a href={it.schemaPdf} target="_blank" rel="noopener noreferrer" style={{
+                      fontSize: '0.75rem', fontWeight: 600, color: '#003366', textDecoration: 'none',
+                      background: '#E8F0F8', padding: '0.2rem 0.6rem', borderRadius: '20px'
+                    }}>Schéma officiel (PDF) ↗</a>
+                  )}
+                </div>
               </div>
             ))}
           </div>
@@ -1949,6 +2017,148 @@ const App = () => {
     );
   };
 
+  const renderAideMemoire = () => {
+    const base = 'https://publication.vd.ch/publications/dgaic/aide-memoire';
+    const themes = [
+      {
+        titre: 'Autorités',
+        url: `${base}/autorites/cadre-legal-de-lactivite-communale`,
+        exemples: 'Cadre légal, Municipalité, Conseil communal, Bureau, Commissions, Droit de proposition, Préavis municipal, Règlements communaux, Récusation, Secret de fonction'
+      },
+      {
+        titre: 'Administration communale',
+        url: `${base}/administration-communale/administration-generale`,
+        exemples: 'Droits politiques, Publicité des décisions, Protection des données, Fusions et collaborations, Contrôle des habitants, Naturalisations, Archives, Statistique'
+      },
+      {
+        titre: 'Finances communales',
+        url: `${base}/finances-communales/plafond-dendettement`,
+        exemples: "Plafond d'endettement, Budget et investissements, Arrêtés d'imposition, Comptes, Péréquation intercommunale, MCH2, Fiscalité, Marchés publics"
+      },
+      {
+        titre: 'Mobilité et territoire',
+        url: `${base}/mobilite-territoire/mobilite-multimodale`,
+        exemples: "Mobilité multimodale, Routes, Transports publics, Aménagement du territoire, Logement, Mensuration officielle"
+      },
+      {
+        titre: 'Domaines et bâtiments',
+        url: `${base}/domaines-batiments/registre-cantonal-des-batiments-rcbat`,
+        exemples: "Permis de construire, Surveillance des chantiers, Radon, Patrimoine bâti, Construction durable, Archéologie, Alpages, Expropriations"
+      },
+      {
+        titre: 'Énergie et durabilité',
+        url: `${base}/energie-durabilite/durabilite-et-climat`,
+        exemples: "Durabilité et climat, Planification énergétique, Subventions, Mobilité électrique, Taxes sur l'électricité, Eau potable"
+      },
+      {
+        titre: 'Environnement',
+        url: `${base}/environnement/assainissement-gestion-des-eaux-urbaines`,
+        exemples: "Assainissement, Cours d'eau, Déchets, Biotopes et espèces, Forêts, Dangers naturels, Agriculture urbaine"
+      },
+      {
+        titre: 'Sécurité publique',
+        url: `${base}/securite-publique/facture-policiere`,
+        exemples: "Facture policière, Manifestations publiques, Prévention criminalité, Gendarmerie, Contraventions, Protection civile, Vidéosurveillance, Sécurité incendie, Inhumations"
+      },
+      {
+        titre: 'Cohésion sociale et santé',
+        url: `${base}/cohesion-sociale-sante/prestations-sociales-hors-revenu-dinsertion`,
+        exemples: "Prestations sociales, Revenu d'insertion, Curatelle adulte, First responders, Défibrillateur, Communes et seniors, Promotion de la santé"
+      },
+      {
+        titre: 'Formation et jeunesse',
+        url: `${base}/formation-jeunesse/soutien-aux-activites-de-la-jeunesse`,
+        exemples: "Soutien à la jeunesse, Protection des mineurs, Accueil de jour des enfants, École obligatoire, Transports scolaires, Constructions scolaires"
+      },
+      {
+        titre: 'Culture et affaires religieuses',
+        url: `${base}/culture-affaires-religieuses/vie-culturelle-et-creation-artistique`,
+        exemples: "Vie culturelle et création artistique, Patrimoine mobilier et immatériel, Écoles de musique, Affaires religieuses"
+      }
+    ];
+
+    return (
+      <div className="content-space" style={{ maxWidth: '1100px' }}>
+        <div className="doc-header">
+          <h1 className="doc-title">AIDE-MÉMOIRE POUR LES AUTORITÉS COMMUNALES</h1>
+          <p className="doc-meta">Direction générale des affaires institutionnelles et des communes (DGAIC) — État de Vaud</p>
+        </div>
+
+        <div style={{ background: '#E8F0F8', border: '1px solid #C9DAEC', borderRadius: '10px', padding: '1rem 1.25rem', marginBottom: '1.5rem' }}>
+          <p style={{ color: '#33444F', fontSize: '0.95rem', lineHeight: 1.6 }}>
+            L'aide-mémoire de la DGAIC est le manuel de référence complet du travail communal vaudois.
+            Il couvre l'ensemble des thématiques auxquelles un conseil communal ou une municipalité
+            peut être confronté. Toutes les pages ci-dessous renvoient à la publication officielle
+            de l'État de Vaud.
+          </p>
+        </div>
+
+        <div className="section-block">
+          <h3 className="section-heading">THÉMATIQUES</h3>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1rem' }}>
+            {themes.map((t) => (
+              <a
+                key={t.titre}
+                href={t.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: 'flex', flexDirection: 'column',
+                  background: 'white', border: '1px solid #D8E0E8', borderRadius: '10px',
+                  padding: '1rem 1.1rem', textDecoration: 'none', color: 'inherit'
+                }}
+              >
+                <div style={{ fontSize: '1.05rem', fontWeight: 700, color: '#003366', marginBottom: '0.4rem' }}>{t.titre}</div>
+                <div style={{ fontSize: '0.85rem', color: '#5A6B7C', lineHeight: 1.55, flex: 1 }}>{t.exemples}</div>
+                <div style={{ marginTop: '0.7rem', fontSize: '0.8rem', color: '#003366', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '0.3rem' }}>
+                  Consulter la section <ChevronRight size={14} />
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <div className="section-block">
+          <h3 className="section-heading">OUTILS DE LA PUBLICATION</h3>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '0.75rem' }}>
+            <a href={base} target="_blank" rel="noopener noreferrer" style={{
+              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+              background: '#003366', color: 'white', padding: '0.85rem 1.1rem',
+              borderRadius: '10px', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 600
+            }}>
+              Sommaire complet <ChevronRight size={18} />
+            </a>
+            <a href={`${base}/recherche`} target="_blank" rel="noopener noreferrer" style={{
+              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+              background: 'white', color: '#003366', border: '1px solid #003366',
+              padding: '0.85rem 1.1rem', borderRadius: '10px', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 600
+            }}>
+              Rechercher un mot-clé <Search size={18} />
+            </a>
+            <a href="https://publication.vd.ch/fileadmin/pub/dgaic/Aide-memoire/2026.03.03_Aide-memoire_-_Publication_-_Etat_de_Vaud.pdf" target="_blank" rel="noopener noreferrer" style={{
+              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+              background: 'white', color: '#003366', border: '1px solid #003366',
+              padding: '0.85rem 1.1rem', borderRadius: '10px', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 600
+            }}>
+              Télécharger le PDF complet <FileText size={18} />
+            </a>
+          </div>
+        </div>
+
+        <div className="info-panel">
+          <h3 className="panel-title">CONTACT</h3>
+          <p className="panel-text">
+            Direction générale des affaires institutionnelles et des communes (DGAIC)<br />
+            Direction des affaires communales et droits politiques<br />
+            Rue Cité-Derrière 17 · 1014 Lausanne<br />
+            <a href="tel:+41213164080" style={{ color: '#003366' }}>021 316 40 80</a> ·{' '}
+            <a href="mailto:affaires-communales@vd.ch" style={{ color: '#003366' }}>affaires-communales@vd.ch</a>
+          </p>
+        </div>
+      </div>
+    );
+  };
+
   const renderFormations = () => {
     const modulesLigne = [
       { titre: "Conseil communal ou général : bien démarrer", statut: "Disponible", url: "https://share.articulate.com/nBsdVtDgAxYfUjAFdgt1Z" },
@@ -2156,6 +2366,7 @@ const App = () => {
     switch(currentPage) {
       case 'accueil': return renderAccueil();
       case 'cantonal': return renderCantonal();
+      case 'aide-memoire': return renderAideMemoire();
       case 'district': return renderDistrict();
       case 'communal': return renderCommunal();
       case 'formations': return renderFormations();
